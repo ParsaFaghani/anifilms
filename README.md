@@ -7,11 +7,11 @@ step 2:
 ##Change the variables in the .env file with your information
 
 > [!NOTE]
-> ```LIARA_ACCESS_KEY``` >> ```AWS_ACCESS_KEY_ID```
-> ```LIARA_SECRET_KEY``` >> ```AWS_SECRET_ACCESS_KEY```
-> ```LIARA_BUCKET_NAME``` >> ```AWS_STORAGE_BUCKET_NAME```
-> ```LIARA_ENDPOINT``` >> ```AWS_S3_ENDPOINT_URL```
-> and ```AWS_S3_REGION_NAME``` >> ```us-east-1``` ***default
+> ```LIARA_ACCESS_KEY``` == ```AWS_ACCESS_KEY_ID``` \n
+> ```LIARA_SECRET_KEY``` == ```AWS_SECRET_ACCESS_KEY``` \n
+> ```LIARA_BUCKET_NAME``` == ```AWS_STORAGE_BUCKET_NAME``` \n 
+> ```LIARA_ENDPOINT``` == ```AWS_S3_ENDPOINT_URL``` \n 
+> and ```AWS_S3_REGION_NAME``` == ```us-east-1``` ***default
 
 > [!NOTE]
 > using postgresql for database and set your postger variables in to .env file
@@ -38,5 +38,4 @@ afer login you create a anime
 > [!IMPORTANT]
 > you can change comment and react settings in controlpanel for better look
 
-thank you
-END!!
+thank you and END!!
