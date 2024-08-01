@@ -11,7 +11,7 @@ step 2:
 > ```LIARA_SECRET_KEY``` == ```AWS_SECRET_ACCESS_KEY``` ------and------
 > ```LIARA_BUCKET_NAME``` == ```AWS_STORAGE_BUCKET_NAME``` ------and------
 > ```LIARA_ENDPOINT``` == ```AWS_S3_ENDPOINT_URL``` ------and------
-> and ```AWS_S3_REGION_NAME``` == ```us-east-1``` ***default
+> and ```AWS_S3_REGION_NAME``` == ```"us-east-1"``` ***default
 
 > [!NOTE]
 > using postgresql for database and set your postger variables in to .env file
