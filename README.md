@@ -4,7 +4,7 @@ A animelist site for translate and upload animes
 step 1:
 run: ```pip install -r requirements.txt```
 step 2:
-##Change the variables in the .env file with your information
+## Change the variables in the .env file with your information
 
 > [!NOTE]
 > ```LIARA_ACCESS_KEY``` == ```AWS_ACCESS_KEY_ID``` ------and------
@@ -16,18 +16,18 @@ step 2:
 > [!NOTE]
 > using postgresql for database and set your postger variables in to .env file
 
-##set migrations after set variables in .env file:
+## set migrations after set variables in .env file:
 run ```python manage.py makemigrations```
 and run ```python manage.py migrate```
 
-##upload static files to server:
+## upload static files to server:
 run ```python manage.py collectstatic```
 
-##create a admin user for add first anime to site:
+## create a admin user for add first anime to site:
 run ```python manage.py createsuperuser```
 and set username, email and password
 
-##run site in localhost:
+## run site in localhost:
 run ```python manage.py runserver```
 and open 127.0.0.1:8000 in browser
 
