@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile &#8226; ANIFILMS {% endblock %}
+
+
+{% block content %}
+<div class="flex flex-wrap justify-center mt-5 pt-4 bg-gray-900 text-white min-h-screen dir-rtl">
+    <div class='hidden md:block w-3/12 p-0'>
+        <ul class='list-none p-0'>
+            <a href="{% url 'accounts:edit_profile' %}" class="text-white no-underline"><li class='py-3 pl-4 border-r-2 border-white font-semibold'>Edit Profile</li></a>
+            <a href="{% url 'accounts:change_password' %}" class="text-white no-underline"><li class='py-3 pl-4'>Change Password</li></a>
+        </ul>
+    </div>
+    <div class="w-full md:w-9/12 p-0 md:p-5">
+        <div class="w-full pr-5 p-0 text-gray-800">
+            <form method="POST" class="pl-5 ml-5" enctype="multipart/form-data">
+                {% csrf_token %} 
+                <div class='mb-3 text-lg'>
+                    <img class='rounded-full w-3/12 text-gray-300' src='{{user_image}}' alt='' style="width: 85px;">
+                    <p class='text-white'>{{user.username}}</p>
+                </div>
+                <div class='mb-3 text-white'>
+                    {{p_form.photo}}
+                </div>
+                <div class='mb-4 flex flex-col'>
+                    <label class="font-bold text-white">Name</label>
+                    {{ u_form.first_name }}
+                </div>
+                <div class='mb-4 flex flex-col'>
+                    <label class="font-bold text-white">Username</label>
+                    {{ u_form.username }}
+                </div>
+                <div class='mb-4 flex flex-col'>
+                    <label class="font-bold text-white">Email</label>
+                    {{ u_form.email }}
+                </div>
+                <div class='mb-4 flex flex-col'>
+                    <label class="font-bold text-white">Bio</label>
+                    {{p_form.bio}}
+                </div>
+                <button type="submit" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

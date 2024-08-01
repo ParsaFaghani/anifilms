@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+<style>
+/* انیمیشن برای تغییرات در منوی تب */
+#translated, #saved {
+  transition: opacity 0.5s;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s;
+}
+</style>
+
+{% block content%}
+
+
+<div class="container mx-auto p-4 text-white" dir='rtl'>
+  <div class="flex justify-center items-center">
+    <img src="{{ profile.photo.url }}" class="rounded-full w-32 h-32" alt="Profile Image">
+  </div>
+  <div class="text-center mt-4">
+    <h1 class="text-2xl font-bold">{{ profile.user.username }}</h1>
+    <p class="mt-2">{{ profile.bio }}</p>
+    <div class="mt-4">
+      <ul>
+        <li class="mb-2">
+          <a href="#" class="text-blue-500"><b>{{profile.user.followers.count|add:-1}}</b> دنبال کننده {%if profile.user.followers.count > 2%}ها{% endif %}</a>
+          <a href="#" class="text-blue-500"><b>{{profile.user.following.count|add:-1}}</b> دنبال شونده ها</a>
+        </li>
+        <li>
+			<span class='follow-section d-inline ml-2'>
+				{% if profile.user == user %}
+					<a href="{% url 'accounts:edit_profile' %}" class="bg-gray-300 text-gray-700 py-2 px-4 rounded">ویرایش اطلاعات</a>
+				{% elif profile.user.username in following %}
+					<a href="#" class="bg-gray-300 text-gray-700 py-2 px-4 rounded"><span style="color:white;">ارسال پیام</span></a>
+					<a href="#" class="bg-gray-300 text-gray-700 py-2 px-4 rounded"style="color:rgb(255, 255, 255);" onclick="follow();"><span style="color:white;">لغو دنبال کردن</span></a>
+				{% else %}
+					<button class="bg-gray-300 text-gray-700 py-2 px-4 rounded" onclick="follow();">دنبال کردن</button> 
+				{% endif %}
+			 </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+	<ul class="flex border-b">
+	<li class="-mb-px mr-1">
+		<a class="bg-blue-800 inline-block py-2 px-4 font-semibold" onclick="openTab(event, 'info')">‌اطلاعات</a>
+	  </li>
+	  <li class="-mb-px mr-1">
+		<a class="bg-blue-800 inline-block py-2 px-4 font-semibold" onclick="openTab(event, 'translated')">‌انیمه‌های ترجمه شده</a>
+	  </li>
+	  {% if profile.user == user %}
+	  <li class="mr-1">
+		<a class="bg-blue-800 inline-block py-2 px-4 font-semibold" onclick="openTab(event, 'saved')">انیمه‌های ذخیره شده</a>
+	  </li>
+	  {% endif %}
+	</ul>
+
+	<!-- محتوای تب -->
+	<div id="info" class="tbs p-4">
+	  <h3 class="text-xl font-bold">‌اطلاعات</h3>
+	  <ul class="mt-4 flex flex-col">
+		{% if profile.admin %}
+			<li class="py-2 border-b border-gray-200">
+			<a href='tel:{{ info.phone }}' class="font-semibold">شماره موبایل: {{ info.phone }}</a>
+			</li>
+			<li class="py-2 border-b border-gray-200">
+			<a href='{{ info.telegram }}' class="font-semibold">ادرس تلگرام: {{ info.telegram }}</a>
+			</li>
+			{% if profile.manager %}
+				<li class="py-2 border-b border-gray-200">
+					<p class="font-semibold">مدیر سایت</p>
+				</li>
+			{% else %}
+			{% if profile.translator %}
+				<li class="py-2 border-b border-gray-200">
+					<p class="font-semibold">مترجم</p>
+				</li>
+			{% endif %}
+			{% if profile.bloger %}
+				<li class="py-2 border-b border-gray-200">
+					<p class="font-semibold">بلاگر</p>
+				</li>
+			{% endif %}
+			{% endif %}
+		{% else %}
+			<li class="py-2 border-b border-gray-200">
+			<p>این کاربر اطلاعات کارمندی ندارد</p>
+			</li>
+		{% endif %}
+	  </ul>
+	</div>
+	<div id="translated" class="tbs p-4 hidden mt-8">
+	  <h3 class="text-xl font-bold">‌انیمه‌های ترجمه شده</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+            {% for similar in anims %}
+                <div class="flex flex-col bg-gray-800 rounded-lg shadow-md overflow-hidden">
+				 <a href="{% url 'anime:view' anim_name=similar.name_Japanese %}" class="text-blue-500 mt-2">
+                    <img class="h-56 w-full object-cover" src="{{ similar.photo.url }}" alt="{{ similar.name_english }}">
+                    <div class="p-4">
+                        <h4 class="font-semibold text-lg">{{ similar.name_english }}</h4>
+                        <p>Seasons: {{ similar.seasion }}</p>
+                        <p>Episodes: {{ similar.max_episod }}</p>
+                       
+                    </div>
+					</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+	{% if profile.user == user %}
+		<div id="saved" class="tbs p-4 hidden">
+		  <h3 class="text-xl font-bold">انیمه‌های ذخیره شده</h3>
+		  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+				{% for similar in saves %}
+					<div class="flex flex-col bg-gray-800 rounded-lg shadow-md overflow-hidden">
+					 <a href="{% url 'anime:view' anim_name=similar.name_Japanese %}" class="text-blue-500 mt-2">
+						<img class="h-56 w-full object-cover" src="{{ similar.photo.url }}" alt="{{ similar.name_english }}">
+						<div class="p-4">
+							<h4 class="font-semibold text-lg">{{ similar.name_english }}</h4>
+							<p>Seasons: {{ similar.seasion }}</p>
+							<p>Episodes: {{ similar.max_episod }}</p>
+						   
+						</div>
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+	</div>
+	{% endif %}
+  </div>
+
+
+  <script>
+    function follow() {
+    
+    var page_url = window.location.href.split('/');
+    user_username = page_url[page_url.length - 2];
+    console.log('follow request sent @ /follow/')
+
+    $.post("{% url 'accounts:follow' %}",{'username':user_username}, function(response){
+        console.log(response.html);
+        $('.follow-section').html(response.html)
+    }).fail(function(xhr){
+        console.log('Follow failed with '+xhr.status+' '+'/follow/');
+    });
+    
+    return false;
+};
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tbs");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.opacity = "0";
+    tabcontent[i].classList.add('hidden');
+  }
+  document.getElementById(tabName).style.opacity = "1";
+  document.getElementById(tabName).classList.remove('hidden');
+}
+  </script>
+
+{% endblock %}
+
+

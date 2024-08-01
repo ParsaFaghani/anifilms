@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load comment_tags %}
+{% load rating_tags %}
+
+{% block head %}
+{% render_rating_import %}
+	<style>
+	/* انیمیشن برای تغییرات در منوی تب */
+	#episodes, #comments {
+	  transition: opacity 0.5s;
+	}
+
+	.hidden {
+	  display: none;
+	}
+	.save-text {
+    display: none;
+	}
+
+	a:hover .save-text {
+		display: inline;
+	}
+	.save-text {
+    display: none;
+    transition: all 0.5s ease;
+    transform: translateX(-20px);
+    opacity: 0;
+	}
+
+	a:hover .save-text {
+		display: inline;
+		transform: translateX(0);
+		opacity: 1;
+	}
+	body {
+        background-color: #1A202C;
+        color: #E2E8F0;
+    }
+
+    .tab-btn {
+        padding: 10px 20px;
+        color: #6B46C1;
+        font-weight: 600;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: color 0.3s;
+		border: 2px solid #6B46C1; /* حاشیه دکمه‌های تب */
+    }
+
+    .tab-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 200%;
+        height: 100%;
+        background-color: rgba(107, 70, 193, 0.5);
+        transition: all 0.3s;
+        transform: translateX(-50%) skewX(-20deg);
+        z-index: -1;
+    }
+
+    .tab-btn:hover::before {
+        transform: translateX(-50%) scaleX(2) skewX(-20deg);
+        opacity: 0;
+    }
+
+    .tab-content {
+        padding: 20px;
+        display: none;
+        border-top: 2px solid #6B46C1;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+	</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-5 rtl">
+    <div class="flex flex-wrap -mx-2 text-white">
+		<div class="w-full md:w-1/2 px-2 mb-4">
+			<img src="{{ anim.photo.url }}" alt="{{ anim.name_english }}" class="w-full h-auto rounded-lg shadow-xl">
+		</div>
+		<div class="w-full md:w-1/2 px-2 text-right">
+			<h2 class="text-2xl font-bold mb-2">{{ anim.name_english }}</h2>
+			<h3 class="text-xl mb-2">{{ anim.name_farsi }}</h3>
+			<h3 class="text-xl mb-2">{{ anim.name_Japanese }}</h3>
+			<p class="mb-2">{{ anim.description }}</p>
+			<div class='text-center'>
+				<p class="mb-2">رتبه: {% if anim.average_rating %}{{ anim.average_rating }}/10{% else %}?{% endif %}</p>
+				<p class="mb-2">قسمت‌ها: {{ anim.max_episod }}</p>
+				<p class="mb-2">فصل‌ها: {{ anim.seasion }}</p>
+				<p class="mb-2">مترجمین: {% for translator in translators %}{{ translator.username }},{% endfor %}</p>
+					<a href="{% url 'anime:anim_save' anim.id %}" class="mt-4 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 hover:from-pink-500 hover:to-orange-500 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center">
+						<i class="fas fa-heart text-white mr-2"></i>
+						<span class="text-white text-sm sm:text-base">افزودن به مورد علاقه ها</span>
+					</a>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="tabs" dir='rtl'>
+		<!-- منوی تب -->
+		<ul class="flex border-b border-gray-200">
+			<li class="-mb-1 mr-1">
+				<a class="tab-btn" onclick="openTab(event, 'episodes')">قسمت‌ها</a>
+			</li>
+			<li class="mr-1">
+				<a class="tab-btn" onclick="openTab(event, 'comments')">نظرات</a>
+			</li>
+			<li class="mr-1">
+				<a class="tab-btn" onclick="openTab(event, 'rating')">رتبه بندی</a>
+			</li>
+		</ul>
+
+		<!-- محتوای تب -->
+		<div id="episodes" class="tab-content py-4">
+			<h3 class="text-2xl font-bold text-white">قسمت‌ها</h3>
+			<ul class="mt-4 flex flex-col space-y-2">
+			{% for video in anim.anim_video_set.all %}
+				<li>
+					<a href="{% url 'anime:video' video.id %}" class="block py-2 px-4 rounded-lg bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300 text-purple-500 font-semibold"> قسمت: {{ video.episod }}</a>
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+
+		<div id="comments" class="tab-content hidden py-4">
+			<h3 class="text-2xl font-bold text-white">نظرات</h3>
+			{% render_comments request obj=anim settings_slug='default-config' %}
+		</div>
+		<div id="rating" class="tab-content hidden py-4">
+			<h3 class="text-2xl font-bold text-white">رتبه بندی</h3>
+			{% render_rating request obj=anim settings_slug='default-config' %}
+			{% render_rating_info request=request obj=anim settings_slug='default-config' %}
+		</div>
+
+		<div class="mt-8">
+			<h3 class="text-2xl font-bold text-white">انیمه‌های مشابه</h3>
+			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+				{% for similar in similars %}
+					<div class="flex flex-col bg-slate-950 rounded-lg shadow-md overflow-hidden">
+						<a href="{% url 'anime:view' anim_name=similar.name_Japanese %}" class="text-blue-500 mt-2">
+							<img class="h-56 w-full object-cover" src="{{ similar.photo.url }}" alt="{{ similar.name_english }}">
+							<div class="p-4">
+								<h4 class="font-semibold text-lg">{{ similar.name_english }}</h4>
+								<p>فصل‌ها: {{ similar.seasion }}</p>
+								<p>قسمت‌ها: {{ similar.max_episod }}</p>
+							</div>
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% render_rating_script %}
+
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+    }
+
+    window.onload = function() {
+        document.getElementById("episodes").classList.add("active");
+    }
+</script>
+
+
+
+{% endblock %}

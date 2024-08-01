@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+{% endblock %}
+{% block content %}
+<div class="w-full max-w-2xl mx-auto mt-5 bg-gray-900 text-white p-6 rounded-lg">
+  <form action="" method="GET" class="bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="mr-2">
+        <label class="block text-sm font-bold mb-2" for="genre">
+          ژانر
+        </label>
+        <select class="border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:ring focus:border-blue-500 bg-gray-900" id="genre" name="genre">
+          <option value="">همه ژانرها</option>
+          {% for tag in tags %}
+          <option value="{{ tag.slug }}">{{ tag.name }}</option>
+          {%endfor %}
+        </select>
+      </div>
+      <div class="ml-2">
+        <label class="block text-sm font-bold mb-2" for="rating">
+          امتیاز
+        </label>
+        <div class="relative">
+          <input class="border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:ring focus:border-blue-500 bg-gray-900" id="rating" type="range" name="rating" min="0" max="10" step="1">
+          <output id="ratingOutput" class="absolute top-0 right-0 mt-2 mr-2 font-semibold"></output>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center justify-end">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50" type="submit">
+        فیلتر
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+  const ratingSlider = document.getElementById('rating');
+  const ratingOutput = document.getElementById('ratingOutput');
+
+  ratingSlider.oninput = function() {
+    ratingOutput.innerHTML = this.value;
+  }
+</script>
+
+<div class="container mx-auto p-4 text-white">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {% for anim in anims %}
+        <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden">
+            <a href="{% url 'anime:view' anim_name=anim.name_Japanese %}">
+                <img class="w-full h-64 object-cover" src="{{ anim.photo.url }}" alt="{{ anim.name_Japanese }}">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold">{{ anim.name_Japanese }}</h2>
+                    <p class="text-base line-clamp-3" dir="rtl">{{ anim.description | truncatewords:50 }}</p>
+                    <div class="flex items-center mt-4 text-yellow-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        <p class="pl-2">{% if anim.average_rating %}{{ anim.average_rating }}/10{% else %}?{% endif %}</p>
+                    </div>
+                    <p class="text-base" dir="rtl">بازدید: {{ anim.view_set.count }}</p>
+                </div>
+            </a>
+            <div class="px-6 pt-4 pb-2" dir="rtl">
+                {% for tag in anim.tags.all %}
+                <a href="{% url 'anime:tagged' tag.slug %}" class="inline-block bg-blue-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#{{ tag }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="mt-8 flex justify-center">
+        {% if anims.has_previous %}
+        <a href="?page=1" class="px-4 py-2 border rounded-l bg-white text-gray-700 hover:bg-gray-200">اولین</a>
+        <a href="?page={{ anims.previous_page_number }}" class="px-4 py-2 border bg-white text-gray-700 hover:bg-gray-200">قبلی</a>
+        {% else %}
+        <div class="px-4 py-2 border rounded-l bg-white text-gray-400 cursor-not-allowed">اولین</div>
+        <div class="px-4 py-2 border bg-white text-gray-400 cursor-not-allowed">قبلی</div>
+        {% endif %}
+
+<div class="px-4 py-2 border bg-white text-gray-700">{{ anims.number }}/{{ anims.paginator.num_pages }}</div>
+        {% if anims.has_next %}
+        <a href="?page={{ anims.next_page_number }}" class="px-4 py-2 border bg-white text-gray-700 hover:bg-gray-200">بعدی</a>
+        <a href="?page={{ anims.paginator.num_pages }}" class="px-4 py-2 border rounded-r bg-white text-gray-700 hover:bg-gray-200">اخرین</a>
+        {% else %}
+        <div class="px-4 py-2 border bg-white text-gray-400 cursor-not-allowed">بعدی</div>
+        <div class="px-4 py-2 border rounded-r bg-white text-gray-400 cursor-not-allowed">اخرین</div>
+        {% endif %}
+    </div>
+</div>
+<div class="container mx-auto my-12 p-6 bg-gray-900 rounded-lg shadow-md text-white">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+        <div class="flex-1 min-w-0">
+            <h2 class="text-2xl font-bold leading-7 sm:text-3xl sm:truncate">
+                بهترین انیمه‌ها
+            </h2>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    {% for anime in top_anime %}
+      <div class="flex flex-col bg-gray-800 rounded-lg shadow-md overflow-hidden">
+        <a href="{% url 'anime:view' anime.name_Japanese %}">
+          <img class="w-full h-64 object-cover" src="{{ anime.photo.url }}" alt="{{ anime.title }}">
+          <div class="p-6">
+            <h3 class="text-xl font-bold">بهترین انیمه ها</h3>
+            <h2 class="text-xl font-bold">{{ anime.name_Japanese }}</h2>
+            <p class="mt-2 text-base">{{ anime.description | truncatewords:50 }}</p>
+            <div class="flex items-center mt-4">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-yellow-500">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+              <p class="pl-2">{% if anime.average_rating %}{{ anime.average_rating }}/10.0{% else %}?{% endif %}</p>
+            </div>
+            <p class="mt-2">تعداد بازدید: {{ anime.view_set.count }}</p>
+          </div>
+        </a>
+      </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

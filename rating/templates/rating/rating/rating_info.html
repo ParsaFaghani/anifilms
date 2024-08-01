@@ -1,0 +1,24 @@
+{% extends 'rating/info/info_base.html' %}
+{% block main %}
+    <div class="text-4xl space-y-4 text-center text-white">
+        <span class="block">تعداد رای: <span class="font-bold">{{ count }}</span></span>
+        <span class="block">میانگین: 
+            {% if count %}
+                <span class="font-bold">{{ average }}/{{ settings.rates }}</span>
+            {% else %}
+                <span class="font-bold">-</span>
+            {% endif %}
+        </span>
+        <span class="block">امتیاز شما:
+            {% if request.user.is_authenticated %}
+                {% if rate is not None %}
+                    <span class="font-bold">{{ rate }}/{{ settings.rates }}</span>
+                {% else %}
+                    <span class="font-bold">-</span>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'admin:login' %}" class="text-blue-500 hover:underline">وارد شوید</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}

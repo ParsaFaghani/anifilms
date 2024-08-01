@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  {% load static %}
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href='{% static "css/base.css" %}'>
+  <script src='{% static "js/jquery.waypoints.min.js" %}'></script>
+  <script src='{% static "js/infinite.min.js" %}'></script>
+  <script src='{% static "js/base.js" %}'></script>
+  <link rel="icon" href="{% static 'img/favicon.ico' %}">
+  
+  {% block head %} {% endblock %}
+  <title>{% block title %} {% endblock %}</title>
+
+</head>
+
+<body>
+
+
+
+    <main role="main" class="container-fluid">
+      <div class='row justify-content-center'>         
+             
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="{% static 'js/base.js' %}"> </script>
+        {% block content %}{% endblock %}
+        {% block js %}{% endblock %}
+      </div>
+    </main>
+
+<script>
+$(".close").click(function() {
+  $(this)
+    .parent(".alert")
+    .fadeOut();
+});
+</script>
+    <script>
+	
+      const loader = document.querySelector(".loader");
+      window.onload = function(){
+        setTimeout(function(){
+          loader.style.opacity = "0";
+          loader.style.display = "none";
+        },250);
+      }
+    </script>
+
+  </body>
+</html>

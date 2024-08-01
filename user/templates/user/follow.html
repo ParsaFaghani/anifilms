@@ -1,0 +1,9 @@
+{% load static %}
+{% if profile.user == user %}
+    <div class='btn btn-outline-secondary btn-sm'><span style="color:white;">Edit Profile</span></div>
+{% elif profile.username in following %}
+    <div class='btn btn-primary btn-sm follow-btn' onclick="follow();">Follow</div>
+{% else %}
+    <div class='btn btn-outline-secondary btn-sm '><span style="color:white;">Message</span></div>
+    <div class='btn btn-outline-secondary btn-sm follow-btn' style="color:white;" onclick="follow();">unfollow</div>
+{% endif%}

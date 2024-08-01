@@ -1,0 +1,36 @@
+{% load i18n %}
+{% load comment_tags %}
+
+<form id="form-comment-reply-{{ comment.urlhash }}" method="post" action="{% url 'comment:create' %}">{% csrf_token %}
+
+    {# render info inputs #}
+    {% include 'comment/comment/object_info.html' with object_info=object_info %}
+
+    {# parent_id #}
+    <input type="hidden" name="parent_id" value="{{ comment.urlhash }}" hidden>
+    <input type="hidden" name="page" value="{{ page }}" hidden>
+
+    {# main form #}
+    <div class="block rounded-lg bg-textarea-bg-light dark:bg-textarea-bg-dark p-4">
+        {% if request.user.is_authenticated %}
+            <textarea name="content" id="id_content" rows="2" placeholder="{% trans 'Reply to' %} {{ comment.user.username }}" spellcheck="false" class="mb-4 box-border block min-h-[56px] w-full resize-y bg-transparent px-2 text-base outline-0 text-textarea-text-light dark:text-textarea-text-dark selection:bg-textarea-text-selection-light dark:selection:bg-text-selection-dark placeholder:text-textarea-text-placeholder-light dark:placeholder:text-textarea-text-placeholder-dark {% if LANGUAGE_CODE == 'fa-ir' %}font-default-fd{% else %}font-default{% endif %}"></textarea>
+
+            <div class="flex justify-end">
+                {# ALLOW_SPOILER#}
+                {% if settings.allow_spoiler %}
+                    <label class="ltr:mr-4 rtl:ml-4 grid content-center">
+                        <input type="checkbox" name="is_spoiler" id="id_is_spoiler" class="peer sr-only"/>
+                        {#ICON EYE#}
+                        <span class="block cursor-pointer peer-checked:hidden">{% include 'comment/icons/icon_eye.html' with class='inline-block w-8 fill-none stroke-icon-spoiler-light dark:stroke-icon-spoiler-dark' %}</span>
+                        {#ICON EYE OFF#}
+                        <span class="hidden cursor-pointer peer-checked:block">{% include 'comment/icons/icon_eye_off.html' with class='inline-block w-8 fill-icon-spoiler-light dark:fill-icon-spoiler-dark' %}</span>
+                    </label>
+                {% endif %}
+                <button type="button" onclick="CreateComment('form-comment-reply-{{ comment.urlhash }}','{{ settings.status_check }}')" class="rounded-lg border-none py-2 px-6 text-xl outline-0 shadow-md bg-btn-reply-bg-light dark:bg-btn-reply-bg-dark text-btn-reply-text-light dark:text-btn-reply-text-dark">{% trans 'Reply' context 'form-button' %}</button>
+            </div>
+        {% else %}
+            <div><a href="{% get_settings 'LOGIN_URL' %}" class="font-bold text-btn-login-text-light dark:text-btn-login-text-dark">{% trans 'Login to reply' context 'login-required' %}</a></div>
+        {% endif %}
+    </div>
+
+</form>

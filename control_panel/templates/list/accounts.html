@@ -1,0 +1,135 @@
+{% extends 'upload/base.html' %}
+{% load static %}
+
+{% block title %}Episod{% endblock %}
+
+
+
+{% block content %}
+  <a href="{% url 'ControlPanel:create' %}"  type="submit" class="btn btn-success pull-right">
+    <span class="glyphicon glyphicon-pencel"></span> افزودن انیمه
+  </a>
+  <h1 class="page-header">
+    کنترل پنل
+    <small>/ حساب کاربری ها</small>
+  </h1>
+
+<div class="row">
+<div class='col-md-9'>
+<table id="gallery" class="table table-bordered">
+  <thead>
+    <tr>
+      <th>تصویر</th>
+      <th>نام انیمه</th>
+      <th>بیو</th>
+	  <th>اطلاعات</th>
+      <th>تنظیمات</th>
+	  <th>مترجم</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    {% for profile in profiles %}
+      <tr id="anim-{{ profile.id }}">
+        <td style="width: 100px;">
+          <img src="{{ profile.photo.url }}" alt="" style="width: 100%;">
+          <p id="error-{{ profile.id }}"></p>
+        </td>
+        <td><a href="{}">{{ profile }}</a></td>
+        <td>
+        <p>{{ profile.bio }}</p>
+        </td>
+		<td>
+        <p>دنبال کنندگان: {{ profile.user.followers.count|add:-1 }}</p>
+		<p>دنبال شونده ها : {{ profile.user.following.count|add:-1 }}</p>
+        </td>
+        <td>
+        {% csrf_token %}
+        <a href="" type="button" class="btn btn-success" ><span class="glyphicon glyphicon-eye-open">دیدن</span></a>
+        <a href="" type="button" class="btn btn-success" ><span class="glyphicon glyphicon-edit">ویرایش</span></a>
+	  </td>
+	  <td>
+	    <button type="button" onclick="set_active({{profile.id}})" id='status-{{profile.id}}' class="btn {% if profile.admin %}btn-success{% else %} btn-danger {% endif %}" {% if request.user.is_staff %} {% else %} disabled {% endif %}><span id='label-{{profile.id}}' class="glyphicon {% if profile.admin %}glyphicon-eye-open{% else %}glyphicon-eye-close{% endif %}">{% if profile.admin %}فعال{% else %}غیر فعال{% endif %}</span></button>
+	  </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">پنل کنترل</h3>
+        </div>
+        <div class="list-group">
+		  <a href="{% url 'ControlPanel:home' %}" class="list-group-item{% if request.path == '/ControlPanel/' %} active{% endif %}">
+            انیمه ها
+          </a>
+          <a href="{% url 'ControlPanel:accounts' %}" class="list-group-item{% if request.path == '/ControlPanel/accounts/' %} active{% endif %}">
+            حساب کاربری ها
+          </a>
+          <a href="" class="list-group-item{% if request.path == '/ControlPanel/blogs/' %} active{% endif %}">
+            بلاگ ها
+          </a>
+        </div>
+      </div>
+    </div>
+</div>
+<script>
+  function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+    function set_active(id){
+      var input = document.getElementById("status-"+id);
+	  var label = document.getElementById("label-"+id);
+      $.ajax({
+        type:'post',
+        url: "{% url 'ControlPanel:set_admin' %}",
+        headers: {'X-CSRFToken': getCookie('csrftoken')},
+        data:{
+            accepted:{% if anim.accepted == True %} "True" {%else%} "False" {%endif%},
+            id:id,
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post'
+        },
+        
+        success: function(response) {
+		  if (response.is_valid){
+			input.classList.remove("btn-success");
+			input.classList.remove("btn-danger");
+			input.classList.add("btn-success");
+			label.classList.remove("glyphicon-eye-open");
+			label.classList.remove("glyphicon-eye-close");
+			label.classList.add("glyphicon-eye-open");
+			label.innerText = "فعال"; 
+		 }else{
+			input.classList.remove("btn-success");
+			input.classList.remove("btn-danger");
+			input.classList.add("btn-danger");
+			label.classList.remove("glyphicon-eye-open");
+			label.classList.remove("glyphicon-eye-close");
+			label.classList.add("glyphicon-eye-close");
+			label.innerText = "غیر فعال"; 
+		 }
+         },
+        
+        error: function(response) {
+            console.log('error');
+        }
+    });
+      
+    };
+</script>
+{% endblock %}

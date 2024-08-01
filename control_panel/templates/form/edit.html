@@ -1,0 +1,71 @@
+{% extends 'upload/base.html' %}
+{% load static %}
+
+{% block title %}edit{% endblock %}
+
+{% block javascript %}
+  {# JQUERY FILE UPLOAD SCRIPTS #}
+  <script src="{% static 'js/jquery-file-upload/vendor/jquery.ui.widget.js' %}"></script>
+  <script src="{% static 'js/jquery-file-upload/jquery.iframe-transport.js' %}"></script>
+  <script src="{% static 'js/jquery-file-upload/jquery.fileupload.js' %}"></script>
+	
+  <script>
+$(function () {
+
+$(".js-upload-photos").click(function () {
+  $("#fileupload").click();
+});
+
+$("#fileupload").fileupload({
+  dataType: 'json',
+  sequentialUploads: true,
+  
+
+  start: function (e) {
+    $("#modal-progress").modal("show");
+  },
+
+  stop: function (e) {
+    $("#modal-progress").modal("hide");
+    console.log('ok');
+    window.location.replace("{% url 'ControlPanel:msg' 'anims' 'تغییر یافت' %}");
+  },
+
+  progressall: function (e, data) {
+    var progress = parseInt(data.loaded / data.total * 100, 10);
+    var strProgress = progress + "%";
+    $(".progress-bar").css({"width": strProgress});
+    $(".progress-bar").text(strProgress);
+  },
+
+  done: function (e, data) {
+    if (data.result.is_valid) {
+
+    }
+  }
+
+});
+
+});
+
+
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div style="margin-bottom: 20px;">
+
+
+<form method="POST" action="{% url 'ControlPanel:edit' anim.id %}" enctype="multipart/form-data"> 
+	{{ form }}
+	<div class='text-center'>
+		<button type="submit" class="btn btn-primary">Submit</button>
+		{% csrf_token %}
+	<div>
+</form>
+<br><br>
+</div>
+
+{% endblock %}

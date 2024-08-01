@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+
+
+{% block content %}
+
+<div class="bg-white p-8 rounded shadow-md w-full max-w-sm mx-auto mt-8 mb-8">
+    <h1 class="text-2xl font-bold mb-4">ورود</h1>
+    <form method="post" action="{% url 'accounts:login' %}">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="username" class="block text-gray-700 font-bold mb-2">نام کاربری</label>
+            <input type="text" id="username" name="username" class="border rounded w-full py-2 px-3" placeholder="نام کاربری خود را وارد کنید">
+        </div>
+        <div class="mb-6">
+            <label for="password" class="block text-gray-700 font-bold mb-2">رمز عبور</label>
+            <input type="password" id="password" name="password" class="border rounded w-full py-2 px-3" placeholder="رمز عبور خود را وارد کنید">
+        </div>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full mb-4">ورود</button>
+        <div class="text-center">
+            <a href="#" class="text-blue-500 hover:underline">فراموشی رمز عبور</a>
+        </div>
+        <div class="text-center mt-4">
+            <span>حساب کاربری ندارید؟</span> <a href="{% url 'accounts:signup'%}" class="text-blue-500 hover:underline">ثبت نام</a>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
+ 

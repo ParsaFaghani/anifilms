@@ -1,0 +1,36 @@
+
+
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content%}
+    {% if posts %}
+      {% for post in posts %}
+
+      <span class='post-overlay-container col-4 p-0 p-md-2'>
+        <img class="btn col-12 p-1" src="{{ post.photo.url }}" style="height: 100%;">
+        <div class="post-overlay all-comments" id='all-comments-{{post.id}}'>
+          <div class="overlay-text">
+            <i class='fa fa-heart col-2'></i>  {{post.post_likes.count}}       
+            <span class='d-none d-md-inline col-md-3'></span>
+            <i class='fa fa-comment'></i> {{post.post_comments.count}}
+          </div>
+        </div>
+      </span>
+      {% endfor %}
+    {% else %}
+    <div class='no-saved-post row col-12 mt-3 justify-content-center'>
+        <small class='text-center'>
+            <img src='{%static "img/no-saved-post.png" %}'>
+            <h3 class='font-weight-light'>Save</h3>
+            <p>Save photos and videos that you want to see again. No <br> one is notified, and only you can see what you've saved.</p>
+        </small>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+
+{% endblock %}
+
+

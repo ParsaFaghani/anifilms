@@ -1,0 +1,11 @@
+{% load static %}
+
+{% if offline_imports %}
+    {# load from source #}
+    <link rel="stylesheet" href="{% static 'comment/css/comment.css' %}">
+{% else %}
+    {# load from url #}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'comment/tailwindcss/tailwind.config.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'comment/tailwindcss/style.css' %}">
+{% endif %}

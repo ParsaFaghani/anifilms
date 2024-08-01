@@ -1,0 +1,131 @@
+{% extends 'upload/base.html' %}
+{% load static %}
+
+{% block title %}Episod{% endblock %}
+
+
+
+{% block content %}
+  <a href="{% url 'ControlPanel:create' %}"  type="submit" class="btn btn-success pull-right">
+    <span class="glyphicon glyphicon-pencil"></span> افزودن انیمه
+  </a>
+  {% if request.user.is_staff %}
+  {% endif %}
+  <h1 class="page-header">
+    کنترل پنل
+    <small>/ انیمه ها</small>
+  </h1>
+
+<div class="row">
+
+<div class='col-md-9'>
+<table id="gallery" class="table table-bordered">
+  <thead>
+    <tr>
+      <th>تصویر</th>
+      <th>نام انیمه</th>
+      <th>توضیحات</th>
+      <th>تنظیمات</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    {% for anim in anims %}
+      <tr id="anim-{{ anim.id }}">
+        <td style="width: 100px;">
+          <img src="{{ anim.photo.url }}" alt="" style="width: 100%;">
+          <p id="error-{{ anim.id }}"></p>
+        </td>
+        <td><a style='word-break: break-word;' href="{% url 'anime:view' anim_name=anim.name_Japanese %}">{{ anim.name_Japanese }}</a></td>
+        <td>
+        <p style='word-break: break-word;'>{{ anim.description | truncatewords:50 }}</p>
+        </td>
+        <td>
+        {% csrf_token %}
+        <a href="{% url 'anime:view' anim_name=anim.name_Japanese %}" type="button" class="btn btn-success" ><span class="glyphicon glyphicon-eye-open">دیدن</span></a>
+        <a href="{% url 'ControlPanel:edit' anim.id %}" type="button" class="btn btn-success" ><span class="glyphicon glyphicon-edit">ویرایش</span></a>
+        <button type="button" onclick="set_active({{anim.id}})" id='status-{{anim.id}}' class="btn {% if anim.accepted %}btn-success{% else %} btn-danger {% endif %}" {% if request.user.is_staff %} {% else %} disabled {% endif %}><span id='label-{{anim.id}}' class="glyphicon {% if anim.accepted %}glyphicon-eye-open{% else %}glyphicon-eye-close{% endif %}">{% if anim.accepted %}فعال{% else %}غیر فعال{% endif %}</span></button>
+        <a href="{% url 'ControlPanel:upload' anim.id %}" type="button" class="btn btn-success" ><span class="glyphicon glyphicon-edit">افزودن قسمت جدید</span></a>
+	  </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">پنل کنترل</h3>
+        </div>
+        <div class="list-group">
+		  <a href="{% url 'ControlPanel:home' %}" class="list-group-item{% if request.path == '/ControlPanel/' %} active{% endif %}">
+            انیمه ها
+          </a>
+          <a href="{% url 'ControlPanel:accounts' %}" class="list-group-item{% if request.path == '/ControlPanel/accounts/' %} active{% endif %}">
+            حساب کاربری ها
+          </a>
+          <a href="" class="list-group-item{% if request.path == '/ControlPanel/blogs/' %} active{% endif %}">
+            بلاگ ها
+          </a>
+        </div>
+      </div>
+    </div>
+</div>
+<script>
+  function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+    function set_active(id){
+      var input = document.getElementById("status-"+id);
+	  var label = document.getElementById("label-"+id);
+      $.ajax({
+        type:'post',
+        url: "{% url 'ControlPanel:change_active_status' %}",
+        headers: {'X-CSRFToken': getCookie('csrftoken')},
+        data:{
+            accepted:{% if anim.accepted == True %} "True" {%else%} "False" {%endif%},
+            id:id,
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            action: 'post'
+        },
+        
+        success: function(response) {
+		  if (response.is_valid){
+			input.classList.remove("btn-success");
+			input.classList.remove("btn-danger");
+			input.classList.add("btn-success");
+			label.classList.remove("glyphicon-eye-open");
+			label.classList.remove("glyphicon-eye-close");
+			label.classList.add("glyphicon-eye-open");
+			label.innerText = "فعال"; 
+		 }else{
+			input.classList.remove("btn-success");
+			input.classList.remove("btn-danger");
+			input.classList.add("btn-danger");
+			label.classList.remove("glyphicon-eye-open");
+			label.classList.remove("glyphicon-eye-close");
+			label.classList.add("glyphicon-eye-close");
+			label.innerText = "غیر فعال"; 
+		 }
+         },
+        
+        error: function(response) {
+            console.log('error');
+        }
+    });
+      
+    };
+</script>
+{% endblock %}

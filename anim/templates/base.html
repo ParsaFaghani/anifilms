@@ -1,0 +1,104 @@
+{% load static %}
+
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='{% static "js/jquery.waypoints.min.js" %}'></script>
+    <script src='{% static "js/infinite.min.js" %}'></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'comment/tailwindcss/tailwind.config.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'comment/tailwindcss/style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/tailwind.min.css' %}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: '#da373d',
+          }
+        }
+      }
+    }
+  </script>
+    {% block head %}
+    {% endblock %}
+    <title>Document</title>
+</head>
+
+<body class="bg-gray-950">
+<nav class="bg-gray-800">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between py-4">
+            <div class="text-white">
+                <a href="{% url 'anime:list' %}" class="object-contain max-h-full m-auto">ANIFILMS</a>
+            </div>
+            <button id="mobileMenuButton" class="text-white lg:hidden">
+                منو
+            </button>
+            <div id="mobileMenu" class="hidden lg:flex lg:items-center lg:justify-end xl:w-1/4 px-2 lg:w-5/12">
+                <ul class="flex flex-col lg:flex-row gap-4">
+                    {% if user.is_authenticated %}
+                    {% if user.user.admin %}
+                        <li><a href="{% url 'ControlPanel:home' %}" class="text-white hover:text-gray-300">کنترل پنل</a></li>
+                      {% endif %}
+                      <li><a href="{% url 'accounts:profile' user.username %}" class="text-white hover:text-gray-300">مشخصات</a></li>
+                      <li><a href="{% url 'accounts:logout' %}" class="text-white hover:text-gray-300">خروج</a></li>
+                    {% else %}
+                      <li><a href="{% url 'accounts:login' %}" class="text-white hover:text-gray-300">ورود</a></li>
+                      <li><a href="{% url 'accounts:signup' %}" class="text-white hover:text-gray-300">ثبت نام</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+{% for message in messages %}
+<div class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
+    <p class="font-bold">{{ message.tags }}</p>
+    <p class="text-sm">{{ message }}</p>
+</div>
+{% endfor %}
+		{% block content %}
+
+		{% endblock %}
+
+
+
+
+	<footer class="bg-gray-900 text-white p-4">
+	  <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+		<div>
+			<p class="object-contain max-h-full m-auto">ANIFILMS</p>
+			<p class="text-sm">Copyright &copy; 2024</p>
+		</div>
+		<div>
+		  <ul class="flex flex-row md:flex-col gap-4">
+			<li><a href="#">درباره انی فیلمز</a></li>
+			<li><a href="#">سیسات حریم خصوصی</a></li>
+			<li><a href="#">قوانین و مقررات</a></li>
+		  </ul>
+		</div>
+	  </div>
+	</footer>
+
+
+    <script src="{% static 'js/searchIcon.js' %}"></script>
+    <script src="{% static 'js/img-hover.js' %}"></script>
+    <script src="{% static 'js/base.js' %}"> </script>
+	<script>
+		const mobileMenuButton = document.getElementById('mobileMenuButton');
+		const mobileMenu = document.getElementById('mobileMenu');
+
+		mobileMenuButton.addEventListener('click', () => {
+			mobileMenu.classList.toggle('hidden');
+		});
+	</script>
+
+</body>
+
+</html>
+
