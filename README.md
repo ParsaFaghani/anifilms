@@ -38,4 +38,4 @@ afer login you create a anime
 > [!IMPORTANT]
 > you can change comment and react settings in controlpanel for better look
 
-thank you and END!!
+thank you
