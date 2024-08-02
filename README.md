@@ -1,6 +1,6 @@
-A animelist site for translate and upload animes
+# A animelist site for translate and upload animes
 
-# 6 steps for run and using:
+## 6 steps for run and using:
 ### **step 1:** install requirements:
 run: ```pip install -r requirements.txt```
 ### **step 2:** Change the variables in the .env file with your information
