@@ -37,4 +37,14 @@ afer login you create a anime
 > [!IMPORTANT]
 > you can change comment and react settings in controlpanel for better look
 
+
+## Roadmaps
+[X] control panel
+[X] favorits
+[X] translators profile
+[X] follow and unfollow system
+[X] comment and rating system
+[] many lang
+[] pay system
+[] and your idea
 thank you
