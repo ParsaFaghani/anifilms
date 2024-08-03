@@ -1,5 +1,5 @@
 # A animelist site for translate and upload animes
-
+<p align="center"><img alt="anifilms Demo" src="https://github.com/ParsaFaghani/anifilms/raw/main/screenshot1.jpg"/></p>
 ## 6 steps for run and using:
 ### **step 1:** install requirements:
 run: ```pip install -r requirements.txt```
