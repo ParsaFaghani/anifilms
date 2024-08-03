@@ -44,8 +44,8 @@ afer login you create a anime
 - [X] translators profile
 - [X] follow and unfollow system
 - [X] comment and rating system
-- [ ] many lang
-- [ ] pay system
+- [ ] multilanguage
+- [ ] payment system
 - [ ] and your idea
 
 
