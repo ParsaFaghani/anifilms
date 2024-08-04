@@ -1,5 +1,6 @@
 # A animelist site for translate and upload animes
 <p align="center"><img alt="anifilms Demo" src="https://github.com/ParsaFaghani/anifilms/raw/master/screenshot1.jpg"/></p>
+
 ## 6 steps for run and using:
 ### **step 1:** install requirements:
 run: ```pip install -r requirements.txt```
@@ -38,12 +39,13 @@ afer login you create a anime
 > you can change comment and react settings in controlpanel for better look
 
 
-## Roadmaps
+## ToDo
 - [X] control panel
 - [X] favorits
 - [X] translators profile
 - [X] follow and unfollow system
 - [X] comment and rating system
+- [ ] drf api
 - [ ] multilanguage
 - [ ] payment system
 - [ ] and your idea
