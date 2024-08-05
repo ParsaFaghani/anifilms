@@ -1,5 +1,6 @@
 {% extends 'upload/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}edit{% endblock %}
 
@@ -61,7 +62,7 @@ $("#fileupload").fileupload({
 <form method="POST" action="{% url 'ControlPanel:edit' anim.id %}" enctype="multipart/form-data"> 
 	{{ form }}
 	<div class='text-center'>
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<button type="submit" class="btn btn-primary">{% trans 'Submit' %}</button>
 		{% csrf_token %}
 	<div>
 </form>

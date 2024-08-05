@@ -8,7 +8,7 @@
 <form method="POST" action="{% url 'ControlPanel:create' %}" enctype="multipart/form-data"> 
   {{ form }}
 	<div class='text-center'>
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<button type="submit" class="btn btn-primary">{% trans 'Submit' %}</button>
 		{% csrf_token %}
 	<div>
 </form> 

@@ -14,18 +14,25 @@ from django.views.decorators.csrf import csrf_protect
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.http import Http404
+from django.utils import translation
 
 
 LIARA = {
-    'endpoint': s.LIARA_ENDPOINT,
-    'accesskey': s.LIARA_ACCESS_KEY,
-    'secretkey': s.LIARA_SECRET_KEY,
-    'bucket': s.LIARA_BUCKET_NAME
+    'endpoint': s.AWS_S3_ENDPOINT_URL,
+    'accesskey': s.AWS_ACCESS_KEY_ID,
+    'secretkey': s.AWS_SECRET_ACCESS_KEY,
+    'bucket': s.AWS_STORAGE_BUCKET_NAME
 }
+
+def check_lang(request):
+    if request.user.is_authenticated:
+        translation.activate(request.user.user.language)
+    
 
 
 @login_required
 def anims(request):
+    check_lang(request)
     if get_object_or_404(Profile,user=request.user).admin == True:
         anims = anim.objects.all()
         return render(request, 'list/anims.html',{'anims':anims})
@@ -34,6 +41,7 @@ def anims(request):
 
 @login_required
 def accounts(request):
+    check_lang(request)
     if get_object_or_404(Profile,user=request.user).admin == True:
         profiles = Profile.objects.all()
         return render(request, 'list/accounts.html',{'profiles':profiles})
@@ -43,6 +51,7 @@ def accounts(request):
 
 @login_required
 def create_anim(request):
+    check_lang(request)
     if get_object_or_404(Profile,user=request.user).admin == True:
         if request.method == 'GET':
             form = animForme()
@@ -67,6 +76,7 @@ def create_anim(request):
 
 @login_required
 def edit_anim(request, anim_id):
+    check_lang(request)
     if get_object_or_404(Profile,user=request.user).admin == True:
         anime = get_object_or_404(anim,id=anim_id)
         if request.method == 'GET':
@@ -88,6 +98,7 @@ def edit_anim(request, anim_id):
 
 @login_required
 def add_photo(request, anim_id):
+    check_lang(request)
     if get_object_or_404(Profile,user=request.user).admin == True:
         anime = get_object_or_404(anim,id=anim_id)
         print('ok1')
@@ -174,6 +185,7 @@ def set_admin(request):
 
 @login_required
 def Upload(request, anim_id):
+    check_lang(request)
     if get_object_or_404(Profile,user=request.user).admin == True:
         anime = get_object_or_404(anim,id=anim_id)
         if request.method == 'GET':
@@ -186,12 +198,6 @@ def Upload(request, anim_id):
             if form.is_valid():
                 Cloudfile = request.FILES.get('file')
                 filename = (anime.name_english +'/' + request.user.username + '/' + str(random.randint(0,99999)) + Cloudfile.name ) 
-                s3 = boto3.client('s3',
-                    endpoint_url=LIARA['endpoint'],
-                    aws_access_key_id=LIARA['accesskey'],
-                    aws_secret_access_key=LIARA['secretkey']
-                )
-                bucket_name = LIARA['bucket']
                 videos = anim_video.objects.filter(anim=anime)
                 if videos.last():
                     episod = videos.last().episod + 1

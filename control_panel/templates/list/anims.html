@@ -1,5 +1,6 @@
 {% extends 'upload/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}Episod{% endblock %}
 
@@ -7,14 +8,13 @@
 
 {% block content %}
   <a href="{% url 'ControlPanel:create' %}"  type="submit" class="btn btn-success pull-right">
-    <span class="glyphicon glyphicon-pencil"></span> افزودن انیمه
+    <span class="glyphicon glyphicon-pencel"></span> {% trans 'Add Anime' %}
   </a>
-  {% if request.user.is_staff %}
-  {% endif %}
   <h1 class="page-header">
-    کنترل پنل
-    <small>/ انیمه ها</small>
+    {% trans 'ControlPanel' %}
+    <small>/{% trans 'Accounts' %}</small>
   </h1>
+
 
 <div class="row">
 
@@ -22,10 +22,10 @@
 <table id="gallery" class="table table-bordered">
   <thead>
     <tr>
-      <th>تصویر</th>
-      <th>نام انیمه</th>
-      <th>توضیحات</th>
-      <th>تنظیمات</th>
+      <th>{% trans 'Photo' %}</th>
+      <th>ن{% trans 'Anime Name' %}</th>
+	  <th>{% trans 'Information' %}</th>
+      <th>{% trans 'Settings' %}</th>
     </tr>
   </thead>
   
@@ -42,10 +42,10 @@
         </td>
         <td>
         {% csrf_token %}
-        <a href="{% url 'anime:view' anim_name=anim.name_Japanese %}" type="button" class="btn btn-success" ><span class="glyphicon glyphicon-eye-open">دیدن</span></a>
-        <a href="{% url 'ControlPanel:edit' anim.id %}" type="button" class="btn btn-success" ><span class="glyphicon glyphicon-edit">ویرایش</span></a>
-        <button type="button" onclick="set_active({{anim.id}})" id='status-{{anim.id}}' class="btn {% if anim.accepted %}btn-success{% else %} btn-danger {% endif %}" {% if request.user.is_staff %} {% else %} disabled {% endif %}><span id='label-{{anim.id}}' class="glyphicon {% if anim.accepted %}glyphicon-eye-open{% else %}glyphicon-eye-close{% endif %}">{% if anim.accepted %}فعال{% else %}غیر فعال{% endif %}</span></button>
-        <a href="{% url 'ControlPanel:upload' anim.id %}" type="button" class="btn btn-success" ><span class="glyphicon glyphicon-edit">افزودن قسمت جدید</span></a>
+        <a href="{% url 'anime:view' anim_name=anim.name_Japanese %}" type="button" class="btn btn-success" ><span class="glyphicon glyphicon-eye-open">{% trans 'See' %}</span></a>
+        <a href="{% url 'ControlPanel:edit' anim.id %}" type="button" class="btn btn-success" ><span class="glyphicon glyphicon-edit">{% trans 'Edit' %}</span></a>
+        <button type="button" onclick="set_active({{anim.id}})" id='status-{{anim.id}}' class="btn {% if anim.accepted %}btn-success{% else %} btn-danger {% endif %}" {% if request.user.is_staff %} {% else %} disabled {% endif %}><span id='label-{{anim.id}}' class="glyphicon {% if anim.accepted %}glyphicon-eye-open{% else %}glyphicon-eye-close{% endif %}">{% if anim.accepted %}{% trans 'Active' %}{% else %}{% trans 'Inactive' %}{% endif %}</span></button>
+        <a href="{% url 'ControlPanel:upload' anim.id %}" type="button" class="btn btn-success" ><span class="glyphicon glyphicon-edit">{% trans 'Add New Episod' %}</span></a>
 	  </td>
       </tr>
     {% endfor %}
@@ -55,17 +55,17 @@
     <div class="col-md-3">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">پنل کنترل</h3>
+          <h3 class="panel-title">{% trans 'ControlPanel' %}</h3>
         </div>
         <div class="list-group">
 		  <a href="{% url 'ControlPanel:home' %}" class="list-group-item{% if request.path == '/ControlPanel/' %} active{% endif %}">
-            انیمه ها
+            {% trans 'Animes' %}
           </a>
           <a href="{% url 'ControlPanel:accounts' %}" class="list-group-item{% if request.path == '/ControlPanel/accounts/' %} active{% endif %}">
-            حساب کاربری ها
+            {% trans 'Accounts' %}
           </a>
           <a href="" class="list-group-item{% if request.path == '/ControlPanel/blogs/' %} active{% endif %}">
-            بلاگ ها
+            {% trans 'Blogs' %}
           </a>
         </div>
       </div>
@@ -109,7 +109,7 @@
 			label.classList.remove("glyphicon-eye-open");
 			label.classList.remove("glyphicon-eye-close");
 			label.classList.add("glyphicon-eye-open");
-			label.innerText = "فعال"; 
+			label.innerText = "{% trans 'Active' %}"; 
 		 }else{
 			input.classList.remove("btn-success");
 			input.classList.remove("btn-danger");
@@ -117,7 +117,7 @@
 			label.classList.remove("glyphicon-eye-open");
 			label.classList.remove("glyphicon-eye-close");
 			label.classList.add("glyphicon-eye-close");
-			label.innerText = "غیر فعال"; 
+			label.innerText = "{% trans 'Inactive' %}"; 
 		 }
          },
         

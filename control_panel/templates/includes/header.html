@@ -1,21 +1,23 @@
+{% load i18n %}
+
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark" >
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'ControlPanel:home' %}">خانه</a>
+    <a class="navbar-brand" href="{% url 'ControlPanel:home' %}">{% trans 'Home' %}</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mynavbar">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'anime:list' %}">بازگشت به سایت</a>
+          <a class="nav-link" href="{% url 'anime:list' %}">{% trans 'back to site' %}</a>
         </li>
 		<li class='nav-item'>
-			<button class="nav-link" onclick='darkMode();'><span class='glyphicon glyphicon-dark'>تغییر تم</span></button>
+			<button class="nav-link" onclick='darkMode();'><span class='glyphicon glyphicon-dark'>{% trans 'Change Theme' %}</span></button>
 		</li>
       </ul>
       <form class="d-flex">
-        <input class="form-control me-2" type="text" placeholder="Search">
-        <button class="btn btn-primary" type="button">Search</button>
+        <input class="form-control me-2" type="text" placeholder="{% trans 'Search' %}">
+        <button class="btn btn-primary" type="button">{% trans 'Search' %}</button>
       </form>
     </div>
   </div>

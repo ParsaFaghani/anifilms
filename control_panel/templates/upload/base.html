@@ -1,12 +1,12 @@
 {% extends 'panel_base.html' %}
-
+{% load i18n %}
 
 {% block content %}
 {% block form %}
 
 {% endblock form %}
   <h1 class="page-header">
-    آپلود
+    {% trans 'Upload' %}
     <small>/ {% block title %}{% endblock %}</small>
   </h1>
       {% block photos_content %}

@@ -1,8 +1,9 @@
 {% extends 'upload/base.html' %}
 
 {% load static %}
+{% load i18n %}
 
-{% block title %}قسمت{% endblock %}
+{% block title %}{% trans 'Episod' %}{% endblock %}
 
 {% block javascript %}
   <script src="{% static 'js/jquery-file-upload/vendor/jquery.ui.widget.js' %}"></script>
@@ -18,7 +19,7 @@
     {% csrf_token %}
     <input type="hidden" name="next" value="{{ request.path }}">
     <button type="submit" class="btn btn-danger pull-right">
-      <span class="glyphicon glyphicon-trash"></span> Clear Database
+      <span class="glyphicon glyphicon-trash"></span> {% trans 'Clear DataBase' %}
     </button>
   </form>
 {% endblock form %}
@@ -29,9 +30,8 @@
       <span class="glyphicon glyphicon-arrow-down" style="font-size: 4rem;"></span>
       <h3>Drop Videos Here to Upload</h3>
       <button type="button" class="btn btn-primary js-upload-photos">
-        <span class="glyphicon glyphicon-cloud-upload"></span> Upload video
+        <span class="glyphicon glyphicon-cloud-upload"></span> {% trans 'Upload Video' %}
       </button>
-      <p>توجه باید ویدیو با کیفیت 1080 باشد</p>
     </div>
     <input id="fileupload" type="file" name="file" multiple
            style="display: none;"
@@ -43,7 +43,7 @@
   <table id="gallery" class="table table-bordered">
     <thead>
       <tr>
-        <th>قسمت ها</th>
+        <th>{% trans 'Episods' %}</th>
       </tr>
     </thead>
     <tbody>
@@ -53,11 +53,11 @@
           <td>
           <form method="post" class='commentForm' id='commentForm-{{video.id}}' name='commentForm' autocomplete="off">
             {% csrf_token %}
-            قسمت:<input type="number" name="episod" min="1" max="2000" id="id_episod-{{ video.id }}" value="{{ video.episod }}">
-            <button type="button" class="btn btn-primary" onclick="set_episod('{{ video.id }}')"><span id="save-{{ video.id }}" class="glyphicon glyphicon-save">save</span></button>
-            <button type="button" class="btn btn-danger" onclick="del('{{ video.id }}')"><span id="delete-{{ video.id }}" class="glyphicon glyphicon-trash">delete</span></button>
-            <a href="{% url 'anime:view' anim.name_english %}#{{ video.episod }}" type="button" class="btn btn-success" ><span class="glyphicon glyphicon-eye-open">view</span></a>
-            <button type="button" class="btn {% if video.accepted %}btn-success{% else %} btn-danger {% endif %}" disabled><span class="glyphicon {% if video.accepted %}glyphicon-eye-open{% else %}glyphicon-eye-close{% endif %}">{% if video.accepted %}avaible{% else %}disable{% endif %}</span></button>
+            {% trans 'Episod' %}:<input type="number" name="episod" min="1" max="2000" id="id_episod-{{ video.id }}" value="{{ video.episod }}">
+            <button type="button" class="btn btn-primary" onclick="set_episod('{{ video.id }}')"><span id="save-{{ video.id }}" class="glyphicon glyphicon-save">{% trans 'Save' %}</span></button>
+            <button type="button" class="btn btn-danger" onclick="del('{{ video.id }}')"><span id="delete-{{ video.id }}" class="glyphicon glyphicon-trash">{% trans 'Delete' %}</span></button>
+            <a href="{% url 'anime:view' anim.name_english %}#{{ video.episod }}" type="button" class="btn btn-success" ><span class="glyphicon glyphicon-eye-open">{% trans 'View' %}</span></a>
+            <button type="button" class="btn {% if video.accepted %}btn-success{% else %} btn-danger {% endif %}" disabled><span class="glyphicon {% if video.accepted %}glyphicon-eye-open{% else %}glyphicon-eye-close{% endif %}">{% if video.accepted %}{% trans 'avaible' %}{% else %}{% trans 'disable' %}{% endif %}</span></button>
           </form>
           <p id="error-{{ video.id }}"></p>
         </td>
@@ -70,7 +70,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Uploading...</h4>
+          <h4 class="modal-title">{% trans 'Uploading' %}...</h4>
         </div>
         <div class="modal-body">
           <div class="progress">
@@ -118,8 +118,8 @@
             },
         
         error: function(response) {
-            valu.innerText = 'خطا';
-            error.innerText = 'نباید این قسمت از حداکثر قسمت انیمه بیشتر باشد همچنین اینترنت را چک کنید';
+            valu.innerText = "{% trans 'Error' %}";
+            error.innerText = "{% trans 'please check internet, and This Episod should not be longer than the maximum Episodes' %}";
         }
     });
       
@@ -147,8 +147,8 @@
         },
         
         error: function(response) {
-            valu.innerText = 'خطا';
-            error.innerText = 'اینترنت را چک کنید';
+            valu.innerText = "{% trans 'Error' %}";
+            error.innerText = "{% trans 'Please check internet' %}";
         }
     });
       
