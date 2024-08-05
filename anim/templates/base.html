@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 
 <html lang="fa">
 <head>
@@ -10,7 +11,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="{% static 'comment/tailwindcss/tailwind.config.js' %}"></script>
     <link rel="stylesheet" href="{% static 'comment/tailwindcss/style.css' %}">
-	<link rel="stylesheet" href="{% static 'css/tailwind.min.css' %}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
@@ -30,6 +30,9 @@
 </head>
 
 <body class="bg-gray-950">
+{% get_current_language as CURRENT_LANGUAGE %}
+{% get_available_languages as AVAILABLE_LANGUAGES %}
+{% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
 <nav class="bg-gray-800">
     <div class="container mx-auto px-4">
         <div class="flex items-center justify-between py-4">
@@ -37,19 +40,19 @@
                 <a href="{% url 'anime:list' %}" class="object-contain max-h-full m-auto">ANIFILMS</a>
             </div>
             <button id="mobileMenuButton" class="text-white lg:hidden">
-                منو
+                {% trans 'Menu' %}
             </button>
             <div id="mobileMenu" class="hidden lg:flex lg:items-center lg:justify-end xl:w-1/4 px-2 lg:w-5/12">
                 <ul class="flex flex-col lg:flex-row gap-4">
                     {% if user.is_authenticated %}
                     {% if user.user.admin %}
-                        <li><a href="{% url 'ControlPanel:home' %}" class="text-white hover:text-gray-300">کنترل پنل</a></li>
+                        <li><a href="{% url 'ControlPanel:home' %}" class="text-white hover:text-gray-300">{% trans 'ControlPanel' %}</a></li>
                       {% endif %}
-                      <li><a href="{% url 'accounts:profile' user.username %}" class="text-white hover:text-gray-300">مشخصات</a></li>
-                      <li><a href="{% url 'accounts:logout' %}" class="text-white hover:text-gray-300">خروج</a></li>
+                      <li><a href="{% url 'accounts:profile' user.username %}" class="text-white hover:text-gray-300">{% trans 'Information' %}</a></li>
+                      <li><a href="{% url 'accounts:logout' %}" class="text-white hover:text-gray-300">{% trans 'Logout' %}</a></li>
                     {% else %}
-                      <li><a href="{% url 'accounts:login' %}" class="text-white hover:text-gray-300">ورود</a></li>
-                      <li><a href="{% url 'accounts:signup' %}" class="text-white hover:text-gray-300">ثبت نام</a></li>
+                      <li><a href="{% url 'accounts:login' %}" class="text-white hover:text-gray-300">{% trans "Login" %}</a></li>
+                      <li><a href="{% url 'accounts:signup' %}" class="text-white hover:text-gray-300">{% trans "Register" %}</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -77,9 +80,9 @@
 		</div>
 		<div>
 		  <ul class="flex flex-row md:flex-col gap-4">
-			<li><a href="#">درباره انی فیلمز</a></li>
-			<li><a href="#">سیسات حریم خصوصی</a></li>
-			<li><a href="#">قوانین و مقررات</a></li>
+			<li><a href="#">{% trans "About anifilms" %}</a></li>
+			<li><a href="#">{% trans "Privacy Policy" %}</a></li>
+			<li><a href="#">{% trans "Terms and Conditions" %}</a></li>
 		  </ul>
 		</div>
 	  </div>

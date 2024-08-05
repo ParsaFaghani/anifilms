@@ -16,26 +16,29 @@ from functools import reduce
 from operator import or_
 from django.db.models import Count,Avg,Q
 from datetime import datetime, timedelta
+from django.utils import translation
+from django.contrib.auth.decorators import login_required
 
 
 
 LIARA = {
-    'endpoint': s.LIARA_ENDPOINT,
-    'accesskey': s.LIARA_ACCESS_KEY,
-    'secretkey': s.LIARA_SECRET_KEY,
-    'bucket': s.LIARA_BUCKET_NAME
+    'endpoint': s.AWS_S3_ENDPOINT_URL,
+    'accesskey': s.AWS_ACCESS_KEY_ID,
+    'secretkey': s.AWS_SECRET_ACCESS_KEY,
+    'bucket': s.AWS_STORAGE_BUCKET_NAME
 }
 
 
-def home(request):
-    return render(request, 'anim/index.html')
-    
+def check_lang(request):
+    if request.user.is_authenticated:
+        translation.activate(request.user.user.language)
     
 def list(request):
-    top_anime = anim.objects.annotate(view_count=Count('view')).order_by('-view_count', 'ratings__average').distinct()[:4]
+    check_lang(request)
+    top_anime = anim.objects.annotate(view_count=Count('view')).order_by('-view_count', 'ratings__average').filter(accepted=True).distinct()[:4]
     
     # Calculate the average rating for each anim
-    anims = anim.objects.annotate(average_ratings=Avg('ratings__average'))
+    anims = anim.objects.annotate(average_ratings=Avg('ratings__average')).filter(accepted=True)
 
     paginator = Paginator(get_list_or_404(anims) , 20)
 
@@ -82,6 +85,7 @@ def list(request):
 
 
 def tagged(request, slug):
+    check_lang(request)
     tag = get_object_or_404(Tag, slug=slug)
     common_tags = anim.tags.most_common()
     posts = anim.objects.filter(tags=tag)
@@ -95,6 +99,7 @@ def tagged(request, slug):
     return render(request, 'anim/anims.html', context)
 
 def view(request,anim_name):
+    check_lang(request)
     anime = get_object_or_404(anim,name_Japanese=anim_name)
     anim_videos = anim_video.objects.filter(anim=anime)
     anim_subs = anim_sub.objects.filter(anim=anime)
@@ -107,11 +112,15 @@ def view(request,anim_name):
     return render(request,'anim/view.html',context={'anim':anime,'similars':similar,'translators':translators})
 
 def view_video(request, video_id):
+    check_lang(request)
     video = anim_video.objects.get(id=video_id)
     
     return render(request,'anim/play_anime.html',context={'video':video})
 
+
+@login_required
 def SaveView(request, pk):
+    check_lang(request)
     post = get_object_or_404(anim, id=pk)
     save = Save(owner=request.user, anim=post)
     try:
@@ -144,5 +153,6 @@ def delete_file(request, file_code):
     bucket_name = LIARA['bucket']
     s3.delete_object(Bucket=bucket_name, Key='media/' + file_code)
     return redirect('list_file')
+
 
 

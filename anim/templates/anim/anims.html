@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load i18n %}
 
 {% block head %}
 {% endblock %}
@@ -10,10 +10,10 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div class="mr-2">
         <label class="block text-sm font-bold mb-2" for="genre">
-          ژانر
+          {% trans 'genre' %}
         </label>
         <select class="border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:ring focus:border-blue-500 bg-gray-900" id="genre" name="genre">
-          <option value="">همه ژانرها</option>
+          <option value="">{% trans 'All genre' %}</option>
           {% for tag in tags %}
           <option value="{{ tag.slug }}">{{ tag.name }}</option>
           {%endfor %}
@@ -21,7 +21,7 @@
       </div>
       <div class="ml-2">
         <label class="block text-sm font-bold mb-2" for="rating">
-          امتیاز
+          {% trans 'rating' %}
         </label>
         <div class="relative">
           <input class="border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:ring focus:border-blue-500 bg-gray-900" id="rating" type="range" name="rating" min="0" max="10" step="1">
@@ -31,7 +31,7 @@
     </div>
     <div class="flex items-center justify-end">
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50" type="submit">
-        فیلتر
+        {% trans 'Filter' %}
       </button>
     </div>
   </form>
@@ -61,7 +61,7 @@
                         </svg>
                         <p class="pl-2">{% if anim.average_rating %}{{ anim.average_rating }}/10{% else %}?{% endif %}</p>
                     </div>
-                    <p class="text-base" dir="rtl">بازدید: {{ anim.view_set.count }}</p>
+                    <p class="text-base" dir="rtl">{% trans 'View' %}: {{ anim.view_set.count }}</p>
                 </div>
             </a>
             <div class="px-6 pt-4 pb-2" dir="rtl">
@@ -74,20 +74,20 @@
     </div>
     <div class="mt-8 flex justify-center">
         {% if anims.has_previous %}
-        <a href="?page=1" class="px-4 py-2 border rounded-l bg-white text-gray-700 hover:bg-gray-200">اولین</a>
-        <a href="?page={{ anims.previous_page_number }}" class="px-4 py-2 border bg-white text-gray-700 hover:bg-gray-200">قبلی</a>
+        <a href="?page=1" class="px-4 py-2 border rounded-l bg-white text-gray-700 hover:bg-gray-200">{% trans 'First' %}</a>
+        <a href="?page={{ anims.previous_page_number }}" class="px-4 py-2 border bg-white text-gray-700 hover:bg-gray-200">{% trans 'previous' %}</a>
         {% else %}
-        <div class="px-4 py-2 border rounded-l bg-white text-gray-400 cursor-not-allowed">اولین</div>
-        <div class="px-4 py-2 border bg-white text-gray-400 cursor-not-allowed">قبلی</div>
+        <div class="px-4 py-2 border rounded-l bg-white text-gray-400 cursor-not-allowed">{% trans 'First' %}</div>
+        <div class="px-4 py-2 border bg-white text-gray-400 cursor-not-allowed">{% trans 'previous' %}</div>
         {% endif %}
 
 <div class="px-4 py-2 border bg-white text-gray-700">{{ anims.number }}/{{ anims.paginator.num_pages }}</div>
         {% if anims.has_next %}
-        <a href="?page={{ anims.next_page_number }}" class="px-4 py-2 border bg-white text-gray-700 hover:bg-gray-200">بعدی</a>
-        <a href="?page={{ anims.paginator.num_pages }}" class="px-4 py-2 border rounded-r bg-white text-gray-700 hover:bg-gray-200">اخرین</a>
+        <a href="?page={{ anims.next_page_number }}" class="px-4 py-2 border bg-white text-gray-700 hover:bg-gray-200">{% trans 'Next' %}</a>
+        <a href="?page={{ anims.paginator.num_pages }}" class="px-4 py-2 border rounded-r bg-white text-gray-700 hover:bg-gray-200">{% trans 'Last' %}</a>
         {% else %}
-        <div class="px-4 py-2 border bg-white text-gray-400 cursor-not-allowed">بعدی</div>
-        <div class="px-4 py-2 border rounded-r bg-white text-gray-400 cursor-not-allowed">اخرین</div>
+        <div class="px-4 py-2 border bg-white text-gray-400 cursor-not-allowed">{% trans 'Next' %}</div>
+        <div class="px-4 py-2 border rounded-r bg-white text-gray-400 cursor-not-allowed">{% trans 'Last' %}</div>
         {% endif %}
     </div>
 </div>
@@ -95,7 +95,7 @@
     <div class="flex flex-col md:flex-row justify-between items-center mb-8">
         <div class="flex-1 min-w-0">
             <h2 class="text-2xl font-bold leading-7 sm:text-3xl sm:truncate">
-                بهترین انیمه‌ها
+                {% trans 'Best Animes' %}
             </h2>
         </div>
     </div>
@@ -105,7 +105,6 @@
         <a href="{% url 'anime:view' anime.name_Japanese %}">
           <img class="w-full h-64 object-cover" src="{{ anime.photo.url }}" alt="{{ anime.title }}">
           <div class="p-6">
-            <h3 class="text-xl font-bold">بهترین انیمه ها</h3>
             <h2 class="text-xl font-bold">{{ anime.name_Japanese }}</h2>
             <p class="mt-2 text-base">{{ anime.description | truncatewords:50 }}</p>
             <div class="flex items-center mt-4">
@@ -114,7 +113,7 @@
               </svg>
               <p class="pl-2">{% if anime.average_rating %}{{ anime.average_rating }}/10.0{% else %}?{% endif %}</p>
             </div>
-            <p class="mt-2">تعداد بازدید: {{ anime.view_set.count }}</p>
+            <p class="mt-2">{% trans 'View' %}: {{ anime.view_set.count }}</p>
           </div>
         </a>
       </div>

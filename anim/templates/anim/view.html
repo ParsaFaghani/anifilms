@@ -2,6 +2,8 @@
 {% load static %}
 {% load comment_tags %}
 {% load rating_tags %}
+{% load i18n %}
+
 
 {% block head %}
 {% render_rating_import %}
@@ -92,13 +94,13 @@
 			<h3 class="text-xl mb-2">{{ anim.name_Japanese }}</h3>
 			<p class="mb-2">{{ anim.description }}</p>
 			<div class='text-center'>
-				<p class="mb-2">رتبه: {% if anim.average_rating %}{{ anim.average_rating }}/10{% else %}?{% endif %}</p>
-				<p class="mb-2">قسمت‌ها: {{ anim.max_episod }}</p>
-				<p class="mb-2">فصل‌ها: {{ anim.seasion }}</p>
-				<p class="mb-2">مترجمین: {% for translator in translators %}{{ translator.username }},{% endfor %}</p>
+				<p class="mb-2">{% trans 'Rating' %}: {% if anim.average_rating %}{{ anim.average_rating }}/10{% else %}?{% endif %}</p>
+				<p class="mb-2">{% trans 'Episodes' %}‌: {{ anim.max_episod }}</p>
+				<p class="mb-2">{% trans 'Seasions' %}: {{ anim.seasion }}</p>
+				<p class="mb-2">{% trans 'translators' %}: {% for translator in translators %}{{ translator.username }},{% endfor %}</p>
 					<a href="{% url 'anime:anim_save' anim.id %}" class="mt-4 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 hover:from-pink-500 hover:to-orange-500 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center">
 						<i class="fas fa-heart text-white mr-2"></i>
-						<span class="text-white text-sm sm:text-base">افزودن به مورد علاقه ها</span>
+						<span class="text-white text-sm sm:text-base">{% trans 'Add to favorites' %}</span>
 					</a>
 			</div>
 		</div>
@@ -109,40 +111,40 @@
 		<!-- منوی تب -->
 		<ul class="flex border-b border-gray-200">
 			<li class="-mb-1 mr-1">
-				<a class="tab-btn" onclick="openTab(event, 'episodes')">قسمت‌ها</a>
+				<a class="tab-btn" onclick="openTab(event, 'episodes')">‌{% trans 'Episodes' %}</a>
 			</li>
 			<li class="mr-1">
-				<a class="tab-btn" onclick="openTab(event, 'comments')">نظرات</a>
+				<a class="tab-btn" onclick="openTab(event, 'comments')">{% trans 'Comments' %}</a>
 			</li>
 			<li class="mr-1">
-				<a class="tab-btn" onclick="openTab(event, 'rating')">رتبه بندی</a>
+				<a class="tab-btn" onclick="openTab(event, 'rating')">{% trans 'rating' %}</a>
 			</li>
 		</ul>
 
 		<!-- محتوای تب -->
 		<div id="episodes" class="tab-content py-4">
-			<h3 class="text-2xl font-bold text-white">قسمت‌ها</h3>
+			<h3 class="text-2xl font-bold text-white">{% trans 'Episodes' %}‌</h3>
 			<ul class="mt-4 flex flex-col space-y-2">
 			{% for video in anim.anim_video_set.all %}
 				<li>
-					<a href="{% url 'anime:video' video.id %}" class="block py-2 px-4 rounded-lg bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300 text-purple-500 font-semibold"> قسمت: {{ video.episod }}</a>
+					<a href="{% url 'anime:video' video.id %}" class="block py-2 px-4 rounded-lg bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300 text-purple-500 font-semibold"> {% trans 'Episod' %}: {{ video.episod }}</a>
 				</li>
 			{% endfor %}
 			</ul>
 		</div>
 
 		<div id="comments" class="tab-content hidden py-4">
-			<h3 class="text-2xl font-bold text-white">نظرات</h3>
+			<h3 class="text-2xl font-bold text-white">{% trans 'Comments' %}</h3>
 			{% render_comments request obj=anim settings_slug='default-config' %}
 		</div>
 		<div id="rating" class="tab-content hidden py-4">
-			<h3 class="text-2xl font-bold text-white">رتبه بندی</h3>
+			<h3 class="text-2xl font-bold text-white">{% trans 'Rating' %}</h3>
 			{% render_rating request obj=anim settings_slug='default-config' %}
 			{% render_rating_info request=request obj=anim settings_slug='default-config' %}
 		</div>
 
 		<div class="mt-8">
-			<h3 class="text-2xl font-bold text-white">انیمه‌های مشابه</h3>
+			<h3 class="text-2xl font-bold text-white">{% trans 'Similar Animes' %}</h3>
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
 				{% for similar in similars %}
 					<div class="flex flex-col bg-slate-950 rounded-lg shadow-md overflow-hidden">
@@ -150,8 +152,8 @@
 							<img class="h-56 w-full object-cover" src="{{ similar.photo.url }}" alt="{{ similar.name_english }}">
 							<div class="p-4">
 								<h4 class="font-semibold text-lg">{{ similar.name_english }}</h4>
-								<p>فصل‌ها: {{ similar.seasion }}</p>
-								<p>قسمت‌ها: {{ similar.max_episod }}</p>
+								<p>{% trans 'Seasions' %}‌: {{ similar.seasion }}</p>
+								<p>{% trans 'Max Episodes' %}: {{ similar.max_episod }}</p>
 							</div>
 						</a>
 					</div>
