@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% load static %}
 
 <style>
-/* انیمیشن برای تغییرات در منوی تب */
 #translated, #saved {
   transition: opacity 0.5s;
 }
@@ -28,18 +27,18 @@
     <div class="mt-4">
       <ul>
         <li class="mb-2">
-          <a href="#" class="text-blue-500"><b>{{profile.user.followers.count|add:-1}}</b> دنبال کننده {%if profile.user.followers.count > 2%}ها{% endif %}</a>
-          <a href="#" class="text-blue-500"><b>{{profile.user.following.count|add:-1}}</b> دنبال شونده ها</a>
+          <a href="#" class="text-blue-500"><b>{{profile.user.followers.count|add:-1}}</b> {% trans 'Follower' %} {%if profile.user.followers.count > 2%}{% trans 's' %}{% endif %}</a>
+          <a href="#" class="text-blue-500"><b>{{profile.user.following.count|add:-1}}</b> {% trans 'Following' %}</a>
         </li>
         <li>
 			<span class='follow-section d-inline ml-2'>
 				{% if profile.user == user %}
-					<a href="{% url 'accounts:edit_profile' %}" class="bg-gray-300 text-gray-700 py-2 px-4 rounded">ویرایش اطلاعات</a>
+					<a href="{% url 'accounts:edit_profile' %}" class="bg-gray-300 text-gray-700 py-2 px-4 rounded">{% trans 'Edit Profile' %}</a>
 				{% elif profile.user.username in following %}
-					<a href="#" class="bg-gray-300 text-gray-700 py-2 px-4 rounded"><span style="color:white;">ارسال پیام</span></a>
-					<a href="#" class="bg-gray-300 text-gray-700 py-2 px-4 rounded"style="color:rgb(255, 255, 255);" onclick="follow();"><span style="color:white;">لغو دنبال کردن</span></a>
+					<a href="#" class="bg-gray-300 text-gray-700 py-2 px-4 rounded"><span style="color:white;">{% trans 'Send Message' %}</span></a>
+					<a href="#" class="bg-gray-300 text-gray-700 py-2 px-4 rounded"style="color:rgb(255, 255, 255);" onclick="follow();"><span style="color:white;">{% trans 'UnFollow' %}</span></a>
 				{% else %}
-					<button class="bg-gray-300 text-gray-700 py-2 px-4 rounded" onclick="follow();">دنبال کردن</button> 
+					<button class="bg-gray-300 text-gray-700 py-2 px-4 rounded" onclick="follow();">{% trans 'Follow' %}</button> 
 				{% endif %}
 			 </span>
         </li>
@@ -48,54 +47,54 @@
   </div>
 	<ul class="flex border-b">
 	<li class="-mb-px mr-1">
-		<a class="bg-blue-800 inline-block py-2 px-4 font-semibold" onclick="openTab(event, 'info')">‌اطلاعات</a>
+		<a class="bg-blue-800 inline-block py-2 px-4 font-semibold" onclick="openTab(event, 'info')">‌{% trans 'Information' %}</a>
 	  </li>
 	  <li class="-mb-px mr-1">
-		<a class="bg-blue-800 inline-block py-2 px-4 font-semibold" onclick="openTab(event, 'translated')">‌انیمه‌های ترجمه شده</a>
+		<a class="bg-blue-800 inline-block py-2 px-4 font-semibold" onclick="openTab(event, 'translated')">‌{% trans 'Translated Animes' %}‌</a>
 	  </li>
 	  {% if profile.user == user %}
 	  <li class="mr-1">
-		<a class="bg-blue-800 inline-block py-2 px-4 font-semibold" onclick="openTab(event, 'saved')">انیمه‌های ذخیره شده</a>
+		<a class="bg-blue-800 inline-block py-2 px-4 font-semibold" onclick="openTab(event, 'saved')">‌{% trans 'Favorite Animes' %}</a>
 	  </li>
 	  {% endif %}
 	</ul>
 
 	<!-- محتوای تب -->
 	<div id="info" class="tbs p-4">
-	  <h3 class="text-xl font-bold">‌اطلاعات</h3>
+	  <h3 class="text-xl font-bold">‌{% trans 'Information' %}</h3>
 	  <ul class="mt-4 flex flex-col">
 		{% if profile.admin %}
 			<li class="py-2 border-b border-gray-200">
-			<a href='tel:{{ info.phone }}' class="font-semibold">شماره موبایل: {{ info.phone }}</a>
+			<a href='tel:{{ info.phone }}' class="font-semibold">{% trans 'Phone Number' %}: {{ info.phone }}</a>
 			</li>
 			<li class="py-2 border-b border-gray-200">
-			<a href='{{ info.telegram }}' class="font-semibold">ادرس تلگرام: {{ info.telegram }}</a>
+			<a href='{{ info.telegram }}' class="font-semibold">{% trans 'Telegram ID' %}: {{ info.telegram }}</a>
 			</li>
 			{% if profile.manager %}
 				<li class="py-2 border-b border-gray-200">
-					<p class="font-semibold">مدیر سایت</p>
+					<p class="font-semibold">{% trans 'Manager' %}</p>
 				</li>
 			{% else %}
 			{% if profile.translator %}
 				<li class="py-2 border-b border-gray-200">
-					<p class="font-semibold">مترجم</p>
+					<p class="font-semibold">{% trans 'Translator' %}</p>
 				</li>
 			{% endif %}
 			{% if profile.bloger %}
 				<li class="py-2 border-b border-gray-200">
-					<p class="font-semibold">بلاگر</p>
+					<p class="font-semibold">{% trans 'Blogger' %}</p>
 				</li>
 			{% endif %}
 			{% endif %}
 		{% else %}
 			<li class="py-2 border-b border-gray-200">
-			<p>این کاربر اطلاعات کارمندی ندارد</p>
+			<p>{% trans 'This user has no employee information' %}</p>
 			</li>
 		{% endif %}
 	  </ul>
 	</div>
 	<div id="translated" class="tbs p-4 hidden mt-8">
-	  <h3 class="text-xl font-bold">‌انیمه‌های ترجمه شده</h3>
+	  <h3 class="text-xl font-bold">‌{% trans 'Translated Animes' %}</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
             {% for similar in anims %}
                 <div class="flex flex-col bg-gray-800 rounded-lg shadow-md overflow-hidden">
@@ -103,8 +102,8 @@
                     <img class="h-56 w-full object-cover" src="{{ similar.photo.url }}" alt="{{ similar.name_english }}">
                     <div class="p-4">
                         <h4 class="font-semibold text-lg">{{ similar.name_english }}</h4>
-                        <p>Seasons: {{ similar.seasion }}</p>
-                        <p>Episodes: {{ similar.max_episod }}</p>
+                        <p>{% trans 'Seasons' %}: {{ similar.seasion }}</p>
+                        <p>{% trans 'Episodes' %}: {{ similar.max_episod }}</p>
                        
                     </div>
 					</a>
@@ -114,7 +113,7 @@
     </div>
 	{% if profile.user == user %}
 		<div id="saved" class="tbs p-4 hidden">
-		  <h3 class="text-xl font-bold">انیمه‌های ذخیره شده</h3>
+		  <h3 class="text-xl font-bold">‌{% trans 'Favorite Animes' %}</h3>
 		  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
 				{% for similar in saves %}
 					<div class="flex flex-col bg-gray-800 rounded-lg shadow-md overflow-hidden">
@@ -122,8 +121,8 @@
 						<img class="h-56 w-full object-cover" src="{{ similar.photo.url }}" alt="{{ similar.name_english }}">
 						<div class="p-4">
 							<h4 class="font-semibold text-lg">{{ similar.name_english }}</h4>
-							<p>Seasons: {{ similar.seasion }}</p>
-							<p>Episodes: {{ similar.max_episod }}</p>
+							<p>{% trans 'Seasons' %}: {{ similar.seasion }}</p>
+							<p>{% trans 'Episodes' %}: {{ similar.max_episod }}</p>
 						   
 						</div>
 						</a>

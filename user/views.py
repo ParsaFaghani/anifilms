@@ -31,12 +31,20 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
+from django.utils import translation
+
+
+def check_lang(request):
+    if request.user.is_authenticated:
+        translation.activate(request.user.user.language)
+
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 
 def signupView(request):
+    check_lang(request)
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -64,6 +72,7 @@ def signupView(request):
     return render(request,'user/signup.html', {'form':form})
 
 def activate(request, uidb64, token):
+    check_lang(request)
     User = get_user_model()
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
@@ -83,10 +92,15 @@ def activate(request, uidb64, token):
 
 class LoginView(LoginView):
     template_name="user/login.html"
-
+    
     def form_valid(self, form):
         messages.success(self.request, 'شما با موفقیت وارد شدید.')
         return super().form_valid(form)
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        if next_url:
+            return next_url
+        return super().get_success_url()
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -120,12 +134,14 @@ class followView(View):
 
 
 def followers(request, username):
+    check_lang(request)
     profile = get_object_or_404(Profile, user__username=username)
     following_queryset = profile.user.following.all()
     following = [follow.reciever.username for follow in following_queryset]
     return render(request,'user/follow-re-ing.html',{'profile':profile,'following':following,'follow':'followers'})
 
 def following(request, username):
+    check_lang(request)
     profile = get_object_or_404(Profile, user__username=username)
     following_queryset = profile.user.following.all()
     following = [follow.reciever.username for follow in following_queryset]
@@ -135,6 +151,7 @@ def following(request, username):
   
 @login_required
 def profileView(request, username):
+    check_lang(request)
     profile = get_object_or_404(Profile, user__username=username)
     saves = request.user.save_owner.all()
     anims_save = [s.anim for s in saves]
@@ -150,7 +167,7 @@ def profileView(request, username):
 
 @login_required
 def editView(request):
-
+    check_lang(request)
     if request.method == 'POST':
         u_form = UserEditForm(request.POST, instance=request.user)
         p_form = ProfileEditForm(request.POST, request.FILES, instance=request.user.user)
@@ -174,6 +191,7 @@ def editView(request):
 
 @login_required
 def change_password(request):
+    check_lang(request)
     if request.method == 'POST':
         form = passwordChangeForm(request.user, request.POST)
         if form.is_valid():

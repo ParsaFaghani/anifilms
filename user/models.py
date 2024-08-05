@@ -27,18 +27,24 @@ class Subscription(models.Model):
 
 
 class Profile(models.Model):
+    LANGUAGE_CHOICES = (
+        ('en', 'English'),
+        ('fa', 'Farsi'),
+   )
     user = models.OneToOneField(User, related_name='user', on_delete=models.CASCADE)
-    photo = models.ImageField(default='p_photos/profile.png')
-    bio = models.TextField(default='', blank=True)
-    admin = models.BooleanField(default=False)
-    translator = models.BooleanField(default=False)
-    bloger = models.BooleanField(default=False)
-    manager = models.BooleanField(default=False)
+    photo = models.ImageField(_('photo'),default='p_photos/profile.png')
+    bio = models.TextField(_('bio'),default='', blank=True)
+    admin = models.BooleanField(_('admin'),default=False)
+    translator = models.BooleanField(_('translator'),default=False)
+    bloger = models.BooleanField(_('bloger'),default=False)
+    manager = models.BooleanField(_('manager'),default=False)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+9999999999'. Up to 15 digits allowed.")
-    phone = models.CharField(validators=[phone_regex], max_length=17, blank=True)
-    telegram = models.URLField(default='', blank=True)
+    phone = models.CharField(_('phone'),validators=[phone_regex], max_length=17, blank=True)
+    telegram = models.URLField(_('telegram'),default='', blank=True)
+    language = models.CharField(default='fa', choices=LANGUAGE_CHOICES, max_length=5)
     subscription = models.ForeignKey(Subscription, on_delete=models.SET_NULL, null=True, blank=True)
-    subscription_end = models.DateField(null=True, blank=True)
+    subscription_end = models.DateField(_('subscription_end'),null=True, blank=True)
+    
 
     def save(self, *args, **kwargs):
         super().save()
@@ -48,16 +54,16 @@ class Profile(models.Model):
 
 
 class DiscountCode(models.Model):
-    code = models.CharField(max_length=50, unique=True)
-    discount = models.DecimalField(max_digits=5, decimal_places=2)
-    start_date = models.DateField()
-    end_date = models.DateField()
+    code = models.CharField(_('code'),max_length=50, unique=True)
+    discount = models.DecimalField(_('discount'),max_digits=5, decimal_places=2)
+    start_date = models.DateField(_('start_date'))
+    end_date = models.DateField(_('end_date'))
 
 
 class Follow(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')    
     reciever = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(_('created_at'),auto_now_add=True)
 
     class Meta:
         ordering = ['-created_at']
@@ -71,7 +77,7 @@ class Follow(models.Model):
 class Save(models.Model) :
     owner = models.ForeignKey(User, related_name='save_owner', on_delete=models.CASCADE)    
     anim = models.ForeignKey(anim, on_delete=models.CASCADE, related_name='anim_saves')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(_('created_at'),auto_now_add=True)
 
     class Meta:
         unique_together = ('owner', 'anim')

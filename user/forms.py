@@ -9,11 +9,11 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 #using first_name as full_name 
 class SignupForm(UserCreationForm):
-    username   = forms.CharField(widget=(forms.TextInput(attrs={'class': 'border rounded w-full py-2 px-3', 'placeholder': 'نام کاربری خود را وارد کنید'})),label='')
-    first_name = forms.CharField(widget=(forms.TextInput(attrs={'class': 'border rounded w-full py-2 px-3', 'placeholder': 'نام کامل خود را وارد کنید'})),label='', max_length=32)
-    email      = forms.EmailField(widget=(forms.EmailInput(attrs={'class': 'border rounded w-full py-2 px-3', 'placeholder': 'ایمیل خود را وارد کنید'})),label='', max_length=64)
-    password1  = forms.CharField(widget=(forms.PasswordInput(attrs={'class': 'border rounded w-full py-2 px-3', 'placeholder': 'رمز عبور خود را وارد کنید'})),label='')
-    password2  = forms.CharField(widget=(forms.PasswordInput(attrs={'class': 'border rounded w-full py-2 px-3', 'placeholder': 'رمز عبور خود را دوباره وارد کنید'})),label='')
+    username   = forms.CharField(widget=(forms.TextInput(attrs={'class': 'border rounded w-full py-2 px-3', 'placeholder': _('enter username')})),label='')
+    first_name = forms.CharField(widget=(forms.TextInput(attrs={'class': 'border rounded w-full py-2 px-3', 'placeholder': _('enter first name')})),label='', max_length=32)
+    email      = forms.EmailField(widget=(forms.EmailInput(attrs={'class': 'border rounded w-full py-2 px-3', 'placeholder': _('enter email')})),label='', max_length=64)
+    password1  = forms.CharField(widget=(forms.PasswordInput(attrs={'class': 'border rounded w-full py-2 px-3', 'placeholder': _('enter password')})),label='')
+    password2  = forms.CharField(widget=(forms.PasswordInput(attrs={'class': 'border rounded w-full py-2 px-3', 'placeholder': _('enter repeat the password')})),label='')
 
     def clean(self):
         email = self.cleaned_data.get('email')

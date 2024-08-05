@@ -1,0 +1,580 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-05 22:56+0430\n"
+"PO-Revision-Date: 2024-08-05 23:08+0000\n"
+"Last-Translator:   <>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.10.0\n"
+
+#: .\anifilms\settings.py:189
+msgid "Farsi"
+msgstr "Farsi"
+
+#: .\anifilms\settings.py:190
+msgid "English"
+msgstr "English"
+
+#: .\anim\models.py:21
+msgid "name_english"
+msgstr "Name English"
+
+#: .\anim\models.py:22
+msgid "name_farsi"
+msgstr "Name Farsi"
+
+#: .\anim\models.py:23
+msgid "name_Japanese"
+msgstr "Name Japanese"
+
+#: .\anim\models.py:24
+msgid "description"
+msgstr "Description"
+
+#: .\anim\models.py:25
+msgid "trailer"
+msgstr "Trailer"
+
+#: .\anim\models.py:26 .\user\models.py:35
+msgid "photo"
+msgstr "Photo"
+
+#: .\anim\models.py:28
+msgid "status"
+msgstr "Status"
+
+#: .\anim\models.py:29
+msgid "seasion"
+msgstr "Seasion"
+
+#: .\anim\models.py:30
+msgid "max_episod"
+msgstr "Max Episod"
+
+#: .\anim\models.py:31
+msgid "publication_year"
+msgstr "Publication Year"
+
+#: .\anim\models.py:32 .\anim\models.py:65 .\anim\models.py:78
+#: .\user\models.py:66 .\user\models.py:80
+msgid "created_at"
+msgstr "Created At"
+
+#: .\anim\models.py:33 .\anim\models.py:64 .\anim\models.py:77
+msgid "accepted"
+msgstr "Accepted"
+
+#: .\anim\models.py:55
+msgid "timestamp"
+msgstr "Time Stamp"
+
+#: .\anim\models.py:62
+msgid "video"
+msgstr "Video"
+
+#: .\anim\models.py:63 .\anim\models.py:76
+msgid "episod"
+msgstr "Episod"
+
+#: .\anim\models.py:75
+msgid "subtile"
+msgstr "Subtile"
+
+#: .\anim\templates\anim\anims.html:13
+msgid "genre"
+msgstr "Genre"
+
+#: .\anim\templates\anim\anims.html:16
+msgid "All genre"
+msgstr "All Genre"
+
+#: .\anim\templates\anim\anims.html:24 .\anim\templates\anim\view.html:120
+msgid "rating"
+msgstr "Rating"
+
+#: .\anim\templates\anim\anims.html:34
+msgid "Filter"
+msgstr "Filter"
+
+#: .\anim\templates\anim\anims.html:64 .\anim\templates\anim\anims.html:116
+#: .\control_panel\templates\upload\upload.html:59
+msgid "View"
+msgstr "View"
+
+#: .\anim\templates\anim\anims.html:77 .\anim\templates\anim\anims.html:80
+msgid "First"
+msgstr "First"
+
+#: .\anim\templates\anim\anims.html:78 .\anim\templates\anim\anims.html:81
+msgid "previous"
+msgstr "Previous"
+
+#: .\anim\templates\anim\anims.html:86 .\anim\templates\anim\anims.html:89
+msgid "Next"
+msgstr "Next"
+
+#: .\anim\templates\anim\anims.html:87 .\anim\templates\anim\anims.html:90
+msgid "Last"
+msgstr "Last"
+
+#: .\anim\templates\anim\anims.html:98
+msgid "Best Animes"
+msgstr "Best Animes"
+
+#: .\anim\templates\anim\view.html:97 .\anim\templates\anim\view.html:141
+msgid "Rating"
+msgstr "Rating"
+
+#: .\anim\templates\anim\view.html:98 .\anim\templates\anim\view.html:114
+#: .\anim\templates\anim\view.html:126 .\user\templates\user\profile.html:106
+#: .\user\templates\user\profile.html:125
+msgid "Episodes"
+msgstr "Episodes"
+
+#: .\anim\templates\anim\view.html:99 .\anim\templates\anim\view.html:155
+msgid "Seasions"
+msgstr "Seasions"
+
+#: .\anim\templates\anim\view.html:100
+#| msgid "translator"
+msgid "translators"
+msgstr "Translators"
+
+#: .\anim\templates\anim\view.html:103
+msgid "Add to favorites"
+msgstr "Add to favorites"
+
+#: .\anim\templates\anim\view.html:117 .\anim\templates\anim\view.html:137
+msgid "Comments"
+msgstr "Comments"
+
+#: .\anim\templates\anim\view.html:130
+#: .\control_panel\templates\upload\upload.html:6
+#: .\control_panel\templates\upload\upload.html:56
+msgid "Episod"
+msgstr "Episod"
+
+#: .\anim\templates\anim\view.html:147
+msgid "Similar Animes"
+msgstr "Similar Animes"
+
+#: .\anim\templates\anim\view.html:156
+msgid "Max Episodes"
+msgstr "Max Episodes"
+
+#: .\anim\templates\base.html:49
+#: .\control_panel\templates\list\accounts.html:14
+#: .\control_panel\templates\list\accounts.html:63
+#: .\control_panel\templates\list\anims.html:14
+#: .\control_panel\templates\list\anims.html:58
+msgid "ControlPanel"
+msgstr "ControlPanel"
+
+#: .\anim\templates\base.html:51
+#: .\control_panel\templates\list\accounts.html:26
+#: .\control_panel\templates\list\anims.html:27
+#: .\user\templates\user\profile.html:50 .\user\templates\user\profile.html:64
+msgid "Information"
+msgstr "Information"
+
+#: .\anim\templates\base.html:52
+msgid "Logout"
+msgstr "Logout"
+
+#: .\anim\templates\base.html:54 .\user\templates\user\login.html:14
+#: .\user\templates\user\login.html:18 .\user\templates\user\login.html:19
+#: .\user\templates\user\login.html:23 .\user\templates\user\login.html:26
+#: .\user\templates\user\signup.html:61
+msgid "Login"
+msgstr "login"
+
+#: .\anim\templates\base.html:55 .\user\templates\user\login.html:31
+#: .\user\templates\user\signup.html:9 .\user\templates\user\signup.html:57
+msgid "Register"
+msgstr "register"
+
+#: .\anim\templates\base.html:83
+msgid "About anifilms"
+msgstr "About anifilms"
+
+#: .\anim\templates\base.html:84
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+#: .\anim\templates\base.html:85
+msgid "Terms and Conditions"
+msgstr "Terms and Conditions"
+
+#: .\control_panel\templates\form\create.html:11
+#: .\control_panel\templates\form\edit.html:65
+#: .\user\templates\user\edit.html:41
+msgid "Submit"
+msgstr "Submit"
+
+#: .\control_panel\templates\includes\header.html:5
+msgid "Home"
+msgstr "Home"
+
+#: .\control_panel\templates\includes\header.html:12
+msgid "back to site"
+msgstr "back to site"
+
+#: .\control_panel\templates\includes\header.html:15
+msgid "Change Theme"
+msgstr "Change Theme"
+
+#: .\control_panel\templates\includes\header.html:19
+#: .\control_panel\templates\includes\header.html:20
+msgid "Search"
+msgstr "Search"
+
+#: .\control_panel\templates\list\accounts.html:11
+#: .\control_panel\templates\list\anims.html:11
+#| msgid "Add "
+msgid "Add Anime"
+msgstr "Add Anime"
+
+#: .\control_panel\templates\list\accounts.html:15
+#: .\control_panel\templates\list\accounts.html:70
+#: .\control_panel\templates\list\anims.html:15
+#: .\control_panel\templates\list\anims.html:65
+#| msgid "discount"
+msgid "Accounts"
+msgstr "Accounts"
+
+#: .\control_panel\templates\list\accounts.html:23
+#: .\control_panel\templates\list\anims.html:25
+#| msgid "photo"
+msgid "Photo"
+msgstr "Photo"
+
+#: .\control_panel\templates\list\accounts.html:24
+#| msgid "Username"
+msgid "UserName"
+msgstr "username"
+
+#: .\control_panel\templates\list\accounts.html:25
+#: .\user\templates\user\edit.html:38
+#| msgid "bio"
+msgid "Bio"
+msgstr "Bio"
+
+#: .\control_panel\templates\list\accounts.html:27
+#: .\control_panel\templates\list\anims.html:28
+msgid "Settings"
+msgstr "Settings"
+
+#: .\control_panel\templates\list\accounts.html:28 .\user\models.py:38
+msgid "translator"
+msgstr "Translator"
+
+#: .\control_panel\templates\list\accounts.html:44
+msgid "Followers"
+msgstr "Followers"
+
+#: .\control_panel\templates\list\accounts.html:45
+#: .\user\templates\user\profile.html:31
+msgid "Following"
+msgstr "Following"
+
+#: .\control_panel\templates\list\accounts.html:49
+#: .\control_panel\templates\list\anims.html:45
+msgid "See"
+msgstr "See"
+
+#: .\control_panel\templates\list\accounts.html:50
+#: .\control_panel\templates\list\anims.html:46
+msgid "Edit"
+msgstr "Edit"
+
+#: .\control_panel\templates\list\accounts.html:53
+#: .\control_panel\templates\list\accounts.html:117
+#: .\control_panel\templates\list\anims.html:47
+#: .\control_panel\templates\list\anims.html:112
+msgid "Active"
+msgstr "Active"
+
+#: .\control_panel\templates\list\accounts.html:53
+#: .\control_panel\templates\list\accounts.html:125
+#: .\control_panel\templates\list\anims.html:47
+#: .\control_panel\templates\list\anims.html:120
+msgid "Inactive"
+msgstr "Inactive"
+
+#: .\control_panel\templates\list\accounts.html:67
+#: .\control_panel\templates\list\anims.html:62
+#| msgid "Best Animes"
+msgid "Animes"
+msgstr "Animes"
+
+#: .\control_panel\templates\list\accounts.html:73
+#: .\control_panel\templates\list\anims.html:68
+msgid "Blogs"
+msgstr "Blogs"
+
+#: .\control_panel\templates\list\anims.html:26
+msgid "Anime Name"
+msgstr "Anime Name"
+
+#: .\control_panel\templates\list\anims.html:48
+#| msgid "Episod"
+msgid "Add New Episod"
+msgstr "Add New Episod"
+
+#: .\control_panel\templates\panel_base.html:46
+msgid "Success"
+msgstr "Success"
+
+#: .\control_panel\templates\panel_base.html:50
+msgid "Info"
+msgstr "Info"
+
+#: .\control_panel\templates\panel_base.html:54
+#: .\control_panel\templates\upload\upload.html:121
+#: .\control_panel\templates\upload\upload.html:150
+msgid "Error"
+msgstr "Error"
+
+#: .\control_panel\templates\panel_base.html:58
+msgid "Alert"
+msgstr "Alert"
+
+#: .\control_panel\templates\upload\base.html:9
+msgid "Upload"
+msgstr "Upload"
+
+#: .\control_panel\templates\upload\upload.html:22
+msgid "Clear DataBase"
+msgstr "Clear DataBase"
+
+#: .\control_panel\templates\upload\upload.html:33
+msgid "Upload Video"
+msgstr "Upload Video"
+
+#: .\control_panel\templates\upload\upload.html:46
+#, fuzzy
+#| msgid "Episodes"
+msgid "Episods"
+msgstr "Episodes"
+
+#: .\control_panel\templates\upload\upload.html:57
+msgid "Save"
+msgstr "Save"
+
+#: .\control_panel\templates\upload\upload.html:58
+msgid "Delete"
+msgstr "Delete"
+
+#: .\control_panel\templates\upload\upload.html:60
+msgid "avaible"
+msgstr "avaible"
+
+#: .\control_panel\templates\upload\upload.html:60
+msgid "disable"
+msgstr "disable"
+
+#: .\control_panel\templates\upload\upload.html:73
+msgid "Uploading"
+msgstr "Uploading"
+
+#: .\control_panel\templates\upload\upload.html:122
+msgid ""
+"please check internet, and This Episod should not be longer than the maximum"
+" Episodes"
+msgstr ""
+"please check internet, and This Episod should not be longer than the maximum"
+" Episodes"
+
+#: .\control_panel\templates\upload\upload.html:151
+msgid "Please check internet"
+msgstr "Please check internet"
+
+#: .\user\forms.py:12
+msgid "enter username"
+msgstr "Enter Username"
+
+#: .\user\forms.py:13
+msgid "enter first name"
+msgstr "Enter first name"
+
+#: .\user\forms.py:14
+msgid "enter email"
+msgstr "Enter Email"
+
+#: .\user\forms.py:15
+msgid "enter password"
+msgstr "Enter password"
+
+#: .\user\forms.py:16
+msgid "enter repeat the password"
+msgstr "Enter repeat the password"
+
+#: .\user\models.py:36
+msgid "bio"
+msgstr "Bio"
+
+#: .\user\models.py:37
+msgid "admin"
+msgstr "Admin"
+
+#: .\user\models.py:39
+msgid "bloger"
+msgstr "Bloger"
+
+#: .\user\models.py:40
+msgid "manager"
+msgstr "Manager"
+
+#: .\user\models.py:42
+msgid "phone"
+msgstr "Phone"
+
+#: .\user\models.py:43
+msgid "telegram"
+msgstr "Telegram"
+
+#: .\user\models.py:46
+msgid "subscription_end"
+msgstr "Subscription End"
+
+#: .\user\models.py:57
+msgid "code"
+msgstr "Code"
+
+#: .\user\models.py:58
+msgid "discount"
+msgstr "Discount"
+
+#: .\user\models.py:59
+msgid "start_date"
+msgstr "Start Date"
+
+#: .\user\models.py:60
+msgid "end_date"
+msgstr "End Date"
+
+#: .\user\templates\user\edit.html:10 .\user\templates\user\follow.html:3
+#: .\user\templates\user\profile.html:36
+msgid "Edit Profile"
+msgstr "Edit Profile"
+
+#: .\user\templates\user\edit.html:11
+#| msgid "Password"
+msgid "Change Password"
+msgstr "Change Password"
+
+#: .\user\templates\user\edit.html:26 .\user\templates\user\signup.html:13
+msgid "first name"
+msgstr "First Name"
+
+#: .\user\templates\user\edit.html:30 .\user\templates\user\signup.html:22
+msgid "Username"
+msgstr "UserName"
+
+#: .\user\templates\user\edit.html:34 .\user\templates\user\signup.html:31
+msgid "Email"
+msgstr "Email"
+
+#: .\user\templates\user\follow.html:5 .\user\templates\user\profile.html:41
+msgid "Follow"
+msgstr "Follow"
+
+#: .\user\templates\user\follow.html:7
+msgid "Message"
+msgstr "Message"
+
+#: .\user\templates\user\follow.html:8 .\user\templates\user\profile.html:39
+msgid "UnFollow"
+msgstr "UnFollow"
+
+#: .\user\templates\user\login.html:22 .\user\templates\user\signup.html:40
+msgid "Password"
+msgstr "password"
+
+#: .\user\templates\user\login.html:28
+msgid "forget password"
+msgstr "forget password"
+
+#: .\user\templates\user\login.html:31
+msgid "Dont have an account"
+msgstr "Don't have an account?"
+
+#: .\user\templates\user\profile.html:30
+msgid "Follower"
+msgstr "Follower"
+
+#: .\user\templates\user\profile.html:30
+msgid "s"
+msgstr "s"
+
+#: .\user\templates\user\profile.html:38
+msgid "Send Message"
+msgstr "Send Message"
+
+#: .\user\templates\user\profile.html:53 .\user\templates\user\profile.html:97
+#, fuzzy
+#| msgid "Best Animes"
+msgid "Translated Animes"
+msgstr "Best Animes"
+
+#: .\user\templates\user\profile.html:57
+#, fuzzy
+#| msgid "Similar Animes"
+msgid "Favorite Animes"
+msgstr "Similar Animes"
+
+#: .\user\templates\user\profile.html:68
+msgid "Phone Number"
+msgstr "Phone Number"
+
+#: .\user\templates\user\profile.html:71
+#, fuzzy
+#| msgid "telegram"
+msgid "Telegram ID"
+msgstr "Telegram"
+
+#: .\user\templates\user\profile.html:75
+#, fuzzy
+#| msgid "manager"
+msgid "Manager"
+msgstr "Manager"
+
+#: .\user\templates\user\profile.html:80
+#, fuzzy
+#| msgid "translator"
+msgid "Translator"
+msgstr "Translator"
+
+#: .\user\templates\user\profile.html:85
+msgid "Blogger"
+msgstr "Blogger"
+
+#: .\user\templates\user\profile.html:91
+msgid "This user has no employee information"
+msgstr "This user has no employee information"
+
+#: .\user\templates\user\profile.html:105
+#: .\user\templates\user\profile.html:124
+#| msgid "Seasions"
+msgid "Seasons"
+msgstr "Seasons"
+
+#: .\user\templates\user\signup.html:49
+msgid "repeat the password"
+msgstr "Repeat the password"
+
+#: .\user\templates\user\signup.html:61
+msgid "Do you have an account"
+msgstr "Do you have an account?"

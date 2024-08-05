@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% block title %}Edit Profile &#8226; ANIFILMS {% endblock %}
 
 
@@ -7,8 +7,8 @@
 <div class="flex flex-wrap justify-center mt-5 pt-4 bg-gray-900 text-white min-h-screen dir-rtl">
     <div class='hidden md:block w-3/12 p-0'>
         <ul class='list-none p-0'>
-            <a href="{% url 'accounts:edit_profile' %}" class="text-white no-underline"><li class='py-3 pl-4 border-r-2 border-white font-semibold'>Edit Profile</li></a>
-            <a href="{% url 'accounts:change_password' %}" class="text-white no-underline"><li class='py-3 pl-4'>Change Password</li></a>
+            <a href="{% url 'accounts:edit_profile' %}" class="text-white no-underline"><li class='py-3 pl-4 border-r-2 border-white font-semibold'>{% trans 'Edit Profile' %}</li></a>
+            <a href="{% url 'accounts:change_password' %}" class="text-white no-underline"><li class='py-3 pl-4'>{% trans 'Change Password' %}</li></a>
         </ul>
     </div>
     <div class="w-full md:w-9/12 p-0 md:p-5">
@@ -23,22 +23,22 @@
                     {{p_form.photo}}
                 </div>
                 <div class='mb-4 flex flex-col'>
-                    <label class="font-bold text-white">Name</label>
+                    <label class="font-bold text-white">{% trans 'first name' %}</label>
                     {{ u_form.first_name }}
                 </div>
                 <div class='mb-4 flex flex-col'>
-                    <label class="font-bold text-white">Username</label>
+                    <label class="font-bold text-white">{% trans 'Username' %}</label>
                     {{ u_form.username }}
                 </div>
                 <div class='mb-4 flex flex-col'>
-                    <label class="font-bold text-white">Email</label>
+                    <label class="font-bold text-white">{% trans 'Email' %}</label>
                     {{ u_form.email }}
                 </div>
                 <div class='mb-4 flex flex-col'>
-                    <label class="font-bold text-white">Bio</label>
+                    <label class="font-bold text-white">{% trans 'Bio' %}</label>
                     {{p_form.bio}}
                 </div>
-                <button type="submit" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Submit</button>
+                <button type="submit" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">{% trans 'Submit' %}</button>
             </form>
         </div>
     </div>

@@ -1,9 +1,10 @@
 {% load static %}
+{% load i18n %}
 {% if profile.user == user %}
-    <div class='btn btn-outline-secondary btn-sm'><span style="color:white;">Edit Profile</span></div>
+    <div class='btn btn-outline-secondary btn-sm'><span style="color:white;">{% trans 'Edit Profile' %}</span></div>
 {% elif profile.username in following %}
-    <div class='btn btn-primary btn-sm follow-btn' onclick="follow();">Follow</div>
+    <div class='btn btn-primary btn-sm follow-btn' onclick="follow();">{% trans 'Follow' %}</div>
 {% else %}
-    <div class='btn btn-outline-secondary btn-sm '><span style="color:white;">Message</span></div>
-    <div class='btn btn-outline-secondary btn-sm follow-btn' style="color:white;" onclick="follow();">unfollow</div>
+    <div class='btn btn-outline-secondary btn-sm '><span style="color:white;">{% trans 'Message' %}</span></div>
+    <div class='btn btn-outline-secondary btn-sm follow-btn' style="color:white;" onclick="follow();">{% trans 'UnFollow' %}</div>
 {% endif%}

@@ -2,15 +2,15 @@
 
 {% load static %}
 {% load crispy_forms_tags %}
-
+{% load i18n %}
 
 {% block content %}
-<div class="bg-white p-8 rounded shadow-md w-full max-w-sm mx-auto mt-8 mb-8">
-    <h1 class="text-2xl font-bold mb-4">ثبت نام</h1>
+<div class="bg-gray-700 p-8 rounded shadow-md w-full max-w-sm mx-auto mt-8 mb-8">
+    <h1 class="text-white text-2xl font-bold mb-4">{% trans 'Register' %}</h1>
     <form method="post" action="{% url 'accounts:signup' %}">
         {% csrf_token %}
         <div class="mb-4">
-            <label for="name" class="block text-gray-700 font-bold mb-2">نام</label>
+            <label for="name" class="block text-white font-bold mb-2">{% trans 'first name' %}</label>
             {{ form.first_name }}
             {% if form.first_name.errors %}
               <div class="text-red-500 mt-2">
@@ -19,7 +19,7 @@
             {% endif %}
         </div> 
         <div class="mb-4">
-            <label for="username" class="block text-gray-700 font-bold mb-2">نام کاربری</label>
+            <label for="username" class="block text-white font-bold mb-2">{% trans 'Username' %}</label>
             {{ form.username }}
             {% if form.name.errors %}
               <div class="text-red-500 mt-2">
@@ -28,7 +28,7 @@
             {% endif %}
         </div>
         <div class="mb-4">
-            <label for="email" class="block text-gray-700 font-bold mb-2">ایمیل</label>
+            <label for="email" class="block text-white font-bold mb-2">{% trans 'Email' %}</label>
             {{ form.email }}
             {% if form.email.errors %}
               <div class="text-red-500 mt-2">
@@ -37,7 +37,7 @@
             {% endif %}
         </div>
         <div class="mb-4">
-            <label for="password" class="block text-gray-700 font-bold mb-2">رمز عبور</label>
+            <label for="password" class="block text-white font-bold mb-2">{% trans 'Password' %}</label>
             {{ form.password1 }}
             {% if form.password1.errors %}
               <div class="text-red-500 mt-2">
@@ -46,7 +46,7 @@
             {% endif %}
         </div>
         <div class="mb-6">
-            <label for="confirm_password" class="block text-gray-700 font-bold mb-2">تکرار رمز عبور</label>
+            <label for="confirm_password" class="block text-white font-bold mb-2">{% trans 'repeat the password' %}</label>
             {{ form.password2 }}
             {% if form.password2.errors %}
               <div class="text-red-500 mt-2">
@@ -54,11 +54,11 @@
               </div>
             {% endif %}
         </div>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full mb-4">ثبت نام</button>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full mb-4">{% trans 'Register' %}</button>
     </form>
   
-  <div class="text-center mt-4">
-    <span> حساب کاربری دارید؟</span> <a href="{% url 'accounts:login' %}" class="text-blue-500 hover:underline">ورود</a>
+  <div class="text-center text-white mt-4">
+    <span> {% trans 'Do you have an account' %}</span> <a href="{% url 'accounts:login' %}" class="text-blue-500 hover:underline">{% trans 'Login' %}</a>
   </div>
 </div>
 {% endblock %}
