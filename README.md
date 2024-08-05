@@ -7,16 +7,9 @@ run: ```pip install -r requirements.txt```
 ### **step 2:** Change the variables in the .env file with your information
 
 > [!NOTE]
-> ```LIARA_ACCESS_KEY``` == ```AWS_ACCESS_KEY_ID``` ------and------
-> ```LIARA_SECRET_KEY``` == ```AWS_SECRET_ACCESS_KEY``` ------and------
-> ```LIARA_BUCKET_NAME``` == ```AWS_STORAGE_BUCKET_NAME``` ------and------
-> ```LIARA_ENDPOINT``` == ```AWS_S3_ENDPOINT_URL``` ------and------
-> and ```AWS_S3_REGION_NAME``` == ```"us-east-1"``` ***default
+> can using postgresql for database and set your postger variables in to .env file(If you use postgresql, you must change the database in the settings)
 
-> [!NOTE]
-> using postgresql for database and set your postger variables in to .env file
-
-### **step 3:** set migrations after set variables in .env file:
+### **step 3:** set migrations:
 run ```python manage.py makemigrations```
 and run ```python manage.py migrate```
 
@@ -45,8 +38,8 @@ afer login you create a anime
 - [X] translators profile
 - [X] follow and unfollow system
 - [X] comment and rating system
+- [X] multilanguage(Farsi and English)
 - [ ] drf api
-- [ ] multilanguage
 - [ ] payment system
 - [ ] and your idea
 
