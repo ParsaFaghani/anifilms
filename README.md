@@ -31,7 +31,7 @@ add a anime to site for fix problem
 for this you open 127.0.0.1:8000/admin/ and enter username and password to login in django controlpanel
 afer login you create a anime
 > [!IMPORTANT]
-> you can change comment and react settings in controlpanel for better look
+> you can change comment and rating settings in controlpanel for better look
 
 
 ## ToDo
@@ -44,4 +44,7 @@ afer login you create a anime
 - [ ] drf api
 - [ ] payment system
 - [ ] and your idea
+
+**[comment-system](https://github.com/mahyar-amiri/django-comment-system)
+**[rating-system](https://github.com/mahyar-amiri/django-rating-system)
 
