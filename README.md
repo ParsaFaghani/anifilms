@@ -45,5 +45,3 @@ afer login you create a anime
 - [ ] payment system
 - [ ] and your idea
 
-
-thank you
