@@ -24,6 +24,8 @@ class animForme(forms.ModelForm):
         self.fields['seasion'].label = 'فصل'
         self.fields['max_episod'].widget.attrs['class'] = 'form-control'
         self.fields['max_episod'].label = 'حداکثر قسمت'
+        self.fields['publication_year'].widget.attrs['class'] = 'form-control'
+        self.fields['publication_year'].label = 'سال انتشار'
         self.fields['photo'].widget.attrs['class'] = 'form-control'
         self.fields['photo'].label = 'تصویر'
         self.fields['tags'].widget.attrs['class'] = 'form-control'
@@ -32,7 +34,7 @@ class animForme(forms.ModelForm):
         
     class Meta:
         model = models.anim
-        fields = ['photo','name_english','name_farsi','name_Japanese','description','status','seasion','max_episod','tags']
+        fields = ['photo','name_english','name_farsi','name_Japanese','description','status','publication_year','seasion','max_episod','tags']
     
 
         
