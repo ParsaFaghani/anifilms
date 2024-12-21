@@ -2,6 +2,9 @@
 {% load i18n %}
 {% load static %}
 
+
+{% block head %}
+
 <style>
 #translated, #saved {
   transition: opacity 0.5s;
@@ -12,7 +15,66 @@
   opacity: 0;
   transition: visibility 0s, opacity 0.5s;
 }
+	<style>
+	/* انیمیشن برای تغییرات در منوی تب */
+	#episodes, #comments {
+	  transition: opacity 0.5s;
+	}
+
+	.hidden {
+	  display: none;
+	}
+	.save-text {
+    display: none;
+	}
+
+	a:hover .save-text {
+		display: inline;
+	}
+	.save-text {
+    display: none;
+    transition: all 0.5s ease;
+    transform: translateX(-20px);
+    opacity: 0;
+	}
+
+	a:hover .save-text {
+		display: inline;
+		transform: translateX(0);
+		opacity: 1;
+	}
+	body {
+        background-color: #1A202C;
+        color: #E2E8F0;
+    }
+
+    .tab-btn {
+        padding: 10px 20px;
+        font-weight: 600;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: color 0.3s;
+		border: 2px solid #6B46C1; /* حاشیه دکمه‌های تب */
+    }
+
+    
+    
+
+    .tab-content {
+        padding: 20px;
+        display: none;
+        border-top: 2px solid #6B46C1;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+	</style>
 </style>
+{% endblock %}
+
 
 {% block content%}
 
@@ -45,22 +107,23 @@
       </ul>
     </div>
   </div>
+  <div class="tabs" dir='rtl'>
 	<ul class="flex border-b">
 	<li class="-mb-px mr-1">
-		<a class="bg-blue-800 inline-block py-2 px-4 font-semibold" onclick="openTab(event, 'info')">‌{% trans 'Information' %}</a>
+		<a class="bg-blue-800 inline-block py-2 px-4 font-semibold tab-btn" onclick="openTab(event, 'info')">‌{% trans 'Information' %}</a>
 	  </li>
 	  <li class="-mb-px mr-1">
-		<a class="bg-blue-800 inline-block py-2 px-4 font-semibold" onclick="openTab(event, 'translated')">‌{% trans 'Translated Animes' %}‌</a>
+		<a class="bg-blue-800 inline-block py-2 px-4 font-semibold tab-btn" onclick="openTab(event, 'translated')">‌{% trans 'Translated Animes' %}‌</a>
 	  </li>
 	  {% if profile.user == user %}
 	  <li class="mr-1">
-		<a class="bg-blue-800 inline-block py-2 px-4 font-semibold" onclick="openTab(event, 'saved')">‌{% trans 'Favorite Animes' %}</a>
+		<a class="bg-blue-800 inline-block py-2 px-4 font-semibold tab-btn" onclick="openTab(event, 'saved')">‌{% trans 'Favorite Animes' %}</a>
 	  </li>
 	  {% endif %}
 	</ul>
 
 	<!-- محتوای تب -->
-	<div id="info" class="tbs p-4">
+	<div id="info" class="tbs p-4" >
 	  <h3 class="text-xl font-bold">‌{% trans 'Information' %}</h3>
 	  <ul class="mt-4 flex flex-col">
 		{% if profile.admin %}
@@ -131,6 +194,7 @@
 			</div>
 	</div>
 	{% endif %}
+	</div>
   </div>
 
 
